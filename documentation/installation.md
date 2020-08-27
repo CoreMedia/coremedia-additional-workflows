@@ -24,7 +24,7 @@ Depending on what you are setup and your plans, you can integrate this project i
 
 ## Release Download
 
-Go to [Release](https://github.com/CoreMedia/<PROJECT_REPO>/releases) and download the version that matches you CMCC release version.
+Go to [Release](https://github.com/CoreMedia/publication-workflows-extensions/releases) and download the version that matches you CMCC release version.
 
 From the Blueprint workspace's root folder, extract the ZIP file into `modules/extensions`.
 
@@ -37,7 +37,7 @@ From the Blueprint workspace's root folder, clone this repository or your fork a
 ```
 $ mkdir -p modules/extensions
 $ cd modules/extensions
-$ git submodule add https://github.com/<YOUR_ORGANIZATION>/<PROJECT_REPO>.git <PROJECT_REPO>
+$ git submodule add https://github.com/CoreMedia/publication-workflows-extensions.git publication-workflows-extensions
 $ git submodule init
 $ git checkout -b <your-branch-name>
 ```
@@ -62,10 +62,24 @@ After adapting the configuration run the extension tool in
 
 ```bash
 $ mvn extensions:sync
-$ mvn extensions:sync -Denable=<PROJECT_MVN_MODULE_NAME>
+$ mvn extensions:sync -Denable=publication-workflows-extensions
 ``` 
 
 This will activate the extension. The extension tool will also set the relative path for the parents of the extension modules.
+
+## Adding the Workflow Extensions to Workflow Server Deployment
+Now that the extensions are activated the workflows will not be provided to the editors
+until the workflow definition files are uploaded to the workflow server.
+
+To upload the scheduled publication you need to add `studio-scheduled-publication.xml` to your workflow definitions
+in `global/management-tools/docker/management-tools/src/docker/import-default-workflows`.
+Add `StudioScheduledPublication:/com/coremedia/blueprint/scheduledpublication/studio-scheduled-publication.xml`
+to the variable `DEFAULT_WORKFLOWS`.
+
+To upload the three step publication you need to add `studio-three-step-publication.xml` to your workflow definitions
+in `global/management-tools/docker/management-tools/src/docker/import-default-workflows`.
+Add `StudioThreeStepPublication:/com/coremedia/blueprint/threesteppublication/studio-three-step-publication.xml`
+to the variable `DEFAULT_WORKFLOWS`.
 
 ## Intellij IDEA Hints
 

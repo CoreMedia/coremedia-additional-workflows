@@ -1,4 +1,4 @@
-# <PROJECT_NAME> Manual
+# Extensions for Publication Workflows Manual
 
 ## Table of Contents
 
