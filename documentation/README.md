@@ -8,7 +8,7 @@
 
 1. [Installation](installation.md)
 
-    How to administrate GlobalLink extension (especially in CoreMedia Studio).
+    How to install the publication workflow extensions.
 
 1. [Contribute](contribute.md)
 
