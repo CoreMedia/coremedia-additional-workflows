@@ -1,22 +1,9 @@
 Changelog
 ================================================================================
 
-X.Y.Z
+2007
 --------------------------------------------------------------------------------
 
 ### Main Changes
 
-* ....
-
-### Bug Fixes
-
-* Fixed #1
-* ...
-
-### Other Changes
-
-* ...
-
-### General Notes
-
-* ...
+* First version compatible to CoreMedia Content Cloud 10.2007.
