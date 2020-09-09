@@ -9,10 +9,12 @@
   <packaging>pom</packaging>
 
   <modules>
+    <!--Modules for the scheduled publication-->
     <module>scheduled-publication-workflow/scheduled-publication-workflow-studio</module>
     <module>scheduled-publication-workflow/scheduled-publication-workflow-studio-lib</module>
     <module>scheduled-publication-workflow/scheduled-publication-workflow-server</module>
 
+    <!--Modules for the three-step publication-->
     <module>three-step-publication-workflow/three-step-publication-workflow-studio</module>
     <module>three-step-publication-workflow/three-step-publication-workflow-studio-lib</module>
     <module>three-step-publication-workflow/three-step-publication-workflow-user-changes</module>
