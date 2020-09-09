@@ -39,7 +39,7 @@ checkout the branch 2007.1.
 
     for recent changes
 
-* **[Issues](https://github.com/CoreMedia/publication-workflows-extensions/issues)**
+* **[Issues](https://github.com/CoreMedia/coremedia-additional-workflows/issues)**
 
     for known bugs and feature requests
 

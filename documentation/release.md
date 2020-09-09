@@ -88,8 +88,8 @@
 > Assuming all branches (master, develop, ci/develop) already exist, proceed as follows:
 >
 > ```bash
-> $ git clone https://github.com/CoreMedia/publication-workflows-extensions.git
-> $ cd publication-workflows-extensions
+> $ git clone https://github.com/CoreMedia/coremedia-additional-workflows.git
+> $ cd coremedia-additional-workflows
 > $ git checkout --track "origin/develop"
 > # ... perform required updates ...
 > $ git commit --all --message="Fixed #1"

@@ -24,7 +24,7 @@ Depending on what you are setup and your plans, you can integrate this project i
 
 ## Release Download
 
-Go to [Release](https://github.com/CoreMedia/publication-workflows-extensions/releases) and download the version that matches you CMCC release version.
+Go to [Release](https://github.com/CoreMedia/coremedia-additional-workflows/releases) and download the version that matches you CMCC release version.
 
 From the Blueprint workspace's root folder, extract the ZIP file into `modules/extensions`.
 
@@ -37,7 +37,7 @@ From the Blueprint workspace's root folder, clone this repository or your fork a
 ```
 $ mkdir -p modules/extensions
 $ cd modules/extensions
-$ git submodule add https://github.com/CoreMedia/publication-workflows-extensions.git publication-workflows-extensions
+$ git submodule add https://github.com/CoreMedia/coremedia-additional-workflows.git coremedia-additional-workflows
 $ git submodule init
 $ git checkout -b <your-branch-name>
 ```
@@ -62,7 +62,7 @@ After adapting the configuration run the extension tool in
 
 ```bash
 $ mvn extensions:sync
-$ mvn extensions:sync -Denable=publication-workflows-extensions
+$ mvn extensions:sync -Denable=coremedia-additional-workflows
 ``` 
 
 This will activate the extension. The extension tool will also set the relative path for the parents of the extension modules.
