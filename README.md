@@ -14,8 +14,8 @@ If a project is inactive it means that the development has been discontinued and
 ## Feature Overview
 
 With the release _2007.1_ of _CoreMedia Content Cloud 10_ it is now possible to 
-configure a customized publication workflow to be used in _CoreMedia Studio_.
-This open source extension is a container for customized publicatin workflows and 
+configure a customized workflow to be used in _CoreMedia Studio_.
+This open source extension is a container for customized workflows and 
 currently provides two new publication workflows which are both exemplary and 
 ready to use in production:
 * Scheduled Publication: Publish CoreMedia Documents at a specified time in the future automatically.
