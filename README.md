@@ -26,7 +26,8 @@ ready to use in production:
 Each workflow extension is contained in a subfolder which in turn contains
 all the modules for the workflow. The main [POM](pom.xml) though contains references
 to modules to all contained workflows. 
-Before startd elete the references to a workflow you want to exclude.
+Keep the references to the workflow you want to use and delete the references 
+to the workflows you want to exclude.
 
 ## Versioning
 
