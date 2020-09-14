@@ -18,8 +18,15 @@ configure a customized workflow to be used in _CoreMedia Studio_.
 This open source extension is a container for customized workflows and 
 currently provides two new publication workflows which are both exemplary and 
 ready to use in production:
-* Scheduled Publication: Publish CoreMedia Documents at a specified time in the future automatically.
-* Three Step Publication: Let CoreMedia Documents be reviewed and published by different editors.  
+* [Scheduled Publication](scheduled-publication-workflow/README.md): Publish CoreMedia Documents at a specified time in the future automatically.
+* [Three Step Publication](three-step-publication-workflow/README.md): Review CoreMedia Documents and publish by different editors.  
+
+## Container for Workflow Extensions
+
+Each workflow extension is contained in a subfolder which in turn contains
+all the modules for the workflow. The main [POM](pom.xml) though contains references
+to modules to all contained workflows. 
+Before startd elete the references to a workflow you want to exclude.
 
 ## Versioning
 
@@ -29,11 +36,12 @@ To find the matching version of your CoreMedia system, please checkout the branc
 with the corresponding name. For example, if your CoreMedia version is 2007.1, 
 checkout the branch 2007.1.
 
+
 ## Documentation & Tutorial
 
-* **[Documentation](documentation/README.md)**
+* **Documentation**
 
-    for guides for editors, administrators and developers    
+    Each workflow extension has its own documenation.    
 
 * **[Changelog](CHANGELOG.md)**
 

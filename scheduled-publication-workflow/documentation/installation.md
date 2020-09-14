@@ -76,11 +76,6 @@ in `global/management-tools/docker/management-tools/src/docker/import-default-wo
 Add `StudioScheduledPublication:/com/coremedia/blueprint/scheduledpublication/studio-scheduled-publication.xml`
 to the variable `DEFAULT_WORKFLOWS`.
 
-To upload the three step publication you need to add `studio-three-step-publication.xml` to your workflow definitions
-in `global/management-tools/docker/management-tools/src/docker/import-default-workflows`.
-Add `StudioThreeStepPublication:/com/coremedia/blueprint/threesteppublication/studio-three-step-publication.xml`
-to the variable `DEFAULT_WORKFLOWS`.
-
 ## Intellij IDEA Hints
 
 For the IDEA import:
