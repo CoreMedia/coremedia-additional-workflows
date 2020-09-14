@@ -16,15 +16,15 @@
 
 ## Introduction
 
-Depending on what you are setup and your plans, you can integrate this project in different ways.
+Depending on your setup and your plans, you can integrate this project in different ways.
 
 * If you want to use the extension in your project, then it is recommended to fork the repository and integrate it as described in [Git Submodule](#git-submodule).
 * If you do not want to use GitHub, proceed as described in [Release Download](#release-download).
-* If you just want to contribute a new feature or a bugfix to the extension, you will need to work with the [Git Submodule](#git-submodule). As an external developer you will still need a fork of the repository to create a Pull Request. 
+* If you just want to contribute a new feature or a bugfix to the extension, you will need to work with the [Git Submodule](#git-submodule). As an external developer, you will still need a fork of the repository to create a Pull Request. 
 
 ## Release Download
 
-Go to [Release](https://github.com/CoreMedia/coremedia-additional-workflows/releases) and download the version that matches you CMCC release version.
+Go to [Release](https://github.com/CoreMedia/coremedia-additional-workflows/releases) and download the version that matches your CMCC release version.
 
 From the Blueprint workspace's root folder, extract the ZIP file into `modules/extensions`.
 
@@ -57,8 +57,8 @@ Here you need to add the following configuration for the `extensions-maven-plugi
 </configuration>
 ```
 
-After adapting the configuration run the extension tool in
-`workspace-configuration/extensions` by executing:
+After adapting the configuration, run the extension tool in
+`workspace-configuration/extensions` by executing the following:
 
 ```bash
 $ mvn extensions:sync
@@ -68,10 +68,10 @@ $ mvn extensions:sync -Denable=coremedia-additional-workflows
 This will activate the extension. The extension tool will also set the relative path for the parents of the extension modules.
 
 ## Adding the Workflow Extensions to Workflow Server Deployment
-Now that the extensions are activated the workflows will not be provided to the editors
+The extensions are now activated, but the workflows will not be available to the editors
 until the workflow definition files are uploaded to the workflow server.
 
-To upload the scheduled publication you need to add `studio-scheduled-publication.xml` to your workflow definitions
+To upload the scheduled publication, you need to add `studio-scheduled-publication.xml` to your workflow definitions
 in `global/management-tools/docker/management-tools/src/docker/import-default-workflows`.
 Add `StudioScheduledPublication:/com/coremedia/blueprint/scheduledpublication/studio-scheduled-publication.xml`
 to the variable `DEFAULT_WORKFLOWS`.
