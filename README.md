@@ -18,8 +18,8 @@ configure a customized workflow to be used in _CoreMedia Studio_.
 This open source extension is a container for customized workflows and 
 currently provides two new publication workflows which are both exemplary and 
 ready to use in production:
-* [Scheduled Publication](scheduled-publication-workflow/README.md): Publish CoreMedia Documents at a specified time in the future automatically.
-* [Three Step Publication](three-step-publication-workflow/README.md): Review CoreMedia Documents and publish by different editors.  
+* [Scheduled Publication](scheduled-publication-workflow/README.md): Publish CoreMedia documents at a specified time in the future automatically.
+* [Three Step Publication](three-step-publication-workflow/README.md): Review CoreMedia documents and publish by different editors.  
 
 ## Container for Workflow Extensions
 
