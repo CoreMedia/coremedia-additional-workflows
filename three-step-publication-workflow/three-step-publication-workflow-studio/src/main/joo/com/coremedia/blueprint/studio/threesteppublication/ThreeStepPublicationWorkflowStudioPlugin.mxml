@@ -41,7 +41,7 @@
     </collab:AddPublicationWorkflowPlugin>
 
     <editor:CopyResourceBundleProperties
-            destination="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.cms.editor.ProcessDefinitions')}"
+            destination="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.cms.studio.workflow.components.ProcessDefinitions')}"
             source="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.blueprint.studio.threesteppublication.ThreeStepPublicationWorkflow')}"/>
   </editor:configuration>
 

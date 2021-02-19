@@ -125,7 +125,7 @@
     </collab:AddPublicationWorkflowPlugin>
     <collab:CustomProcessIconPlugin customProcessIconFunction="{setScheduledPublicationProcessIcon}"/>
     <editor:CopyResourceBundleProperties
-            destination="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.cms.editor.ProcessDefinitions')}"
+            destination="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.cms.studio.workflow.components.ProcessDefinitions')}"
             source="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.blueprint.studio.scheduledpublication.ScheduledPublicationWorkflow')}"/>
     <editor:CopyResourceBundleProperties
             destination="{ResourceManager.getInstance().getResourceBundle(null, 'com.coremedia.cms.editor.controlroom.ControlRoom')}"
