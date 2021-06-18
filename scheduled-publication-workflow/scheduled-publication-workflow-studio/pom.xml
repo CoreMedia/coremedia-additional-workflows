@@ -18,34 +18,44 @@
   </properties>
 
   <dependencies>
-
-    <dependency>
-      <groupId>com.coremedia.blueprint.base</groupId>
-      <artifactId>bpbase-studio-components</artifactId>
-      <type>swc</type>
-    </dependency>
-
     <dependency>
       <groupId>com.coremedia.ui.collaboration</groupId>
       <artifactId>control-room-editor-components</artifactId>
       <type>swc</type>
     </dependency>
-
     <dependency>
       <groupId>com.coremedia.ui.toolkit</groupId>
       <artifactId>ui-components</artifactId>
       <type>swc</type>
     </dependency>
-
     <dependency>
       <groupId>com.coremedia.ui.sdk</groupId>
       <artifactId>editor-components</artifactId>
       <type>swc</type>
     </dependency>
-
     <dependency>
-      <groupId>net.jangaroo</groupId>
-      <artifactId>ext-as</artifactId>
+      <groupId>com.coremedia.ui.toolkit</groupId>
+      <artifactId>client-core</artifactId>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>com.coremedia.ui.sdk</groupId>
+      <artifactId>cap-rest-client</artifactId>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>com.coremedia.ui.sdk</groupId>
+      <artifactId>cap-rest-client-impl</artifactId>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>studio-client.workflow-components</artifactId>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>com.coremedia.ui.toolkit</groupId>
+      <artifactId>core-icons</artifactId>
       <type>swc</type>
     </dependency>
   </dependencies>
