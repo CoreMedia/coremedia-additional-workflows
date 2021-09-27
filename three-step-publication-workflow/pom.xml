@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>three-step-publication-workflow-studio</module>
+    <!--module>three-step-publication-workflow-studio</module-->
     <module>three-step-publication-workflow-studio-lib</module>
     <module>three-step-publication-workflow-user-changes</module>
     <module>three-step-publication-workflow-server</module>

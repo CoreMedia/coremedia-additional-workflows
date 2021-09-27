@@ -5,9 +5,9 @@
 
   <parent>
     <groupId>com.coremedia.blueprint</groupId>
-    <artifactId>studio-client.extensions</artifactId>
+    <artifactId>studio-client.migration-parent</artifactId>
     <version>1-SNAPSHOT</version>
-    <relativePath>../../../../../apps/studio-client/modules/extensions/pom.xml</relativePath>
+    <relativePath>../../../pom.xml</relativePath>
   </parent>
 
   <artifactId>three-step-publication-workflow-studio</artifactId>
