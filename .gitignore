@@ -190,3 +190,18 @@ $RECYCLE.BIN/
 
 # Microsoft Office Temporary Files
 ~*.*
+
+# NodeJS
+node_modules/
+
+# config
+.npmrc
+
+# Jangaroo Build
+dist/
+build/
+generated/
+
+# osx
+.DS_Store
+
