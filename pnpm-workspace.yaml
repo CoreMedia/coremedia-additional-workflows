@@ -1,0 +1,7 @@
+packages:
+  - "scheduled-publication-workflow/studio-client/apps/main/scheduled-publication-workflow"
+  - "scheduled-publication-workflow/studio-client/apps/workflow/scheduled-publication-workflow"
+  - "scheduled-publication-workflow/studio-client/shared/ext/scheduled-publication-workflow"
+  - "three-step-publication-workflow/studio-client/apps/main/three-step-publication-workflow"
+  - "three-step-publication-workflow/studio-client/apps/workflow/three-step-publication-workflow"
+  - "three-step-publication-workflow/studio-client/shared/ext/three-step-publication-workflow"
