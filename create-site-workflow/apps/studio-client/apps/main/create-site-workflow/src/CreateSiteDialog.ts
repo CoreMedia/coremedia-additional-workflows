@@ -7,13 +7,16 @@ import BindPropertyPlugin from "@coremedia/studio-client.ext.ui-components/plugi
 import ButtonSkin from "@coremedia/studio-client.ext.ui-components/skins/ButtonSkin";
 import WindowSkin from "@coremedia/studio-client.ext.ui-components/skins/WindowSkin";
 import Editor_properties from "@coremedia/studio-client.main.editor-components/Editor_properties";
-import AvailableLocalesComboBox
-  from "@coremedia/studio-client.main.editor-components/sdk/translate/AvailableLocalesComboBox";
+import AvailableLocalesComboBox from "@coremedia/studio-client.main.editor-components/sdk/translate/AvailableLocalesComboBox";
 import WorkflowUtils from "@coremedia/studio-client.main.editor-components/sdk/util/WorkflowUtils";
 import Button from "@jangaroo/ext-ts/button/Button";
+import Container from "@jangaroo/ext-ts/container/Container";
 import BaseField from "@jangaroo/ext-ts/form/field/Base";
+import CheckboxField from "@jangaroo/ext-ts/form/field/Checkbox";
 import TextField from "@jangaroo/ext-ts/form/field/Text";
+import HBoxLayout from "@jangaroo/ext-ts/layout/container/HBox";
 import VBoxLayout from "@jangaroo/ext-ts/layout/container/VBox";
+import { bind } from "@jangaroo/runtime";
 import Config from "@jangaroo/runtime/Config";
 import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import CreateSiteProcessMonitor from "./CreateSiteProcessMonitor";
@@ -40,6 +43,8 @@ class CreateSiteDialog extends StudioDialog {
 
   static readonly TARGET_SITE_MANAGER_GROUP = "targetSiteManagerGroup";
 
+  static readonly AUTO_GENERATE_ID_AND_SEGMENT = "autoGenerateIdAndSegment";
+
   #model: Bean;
 
   constructor(config: Config<CreateSiteDialog>) {
@@ -48,7 +53,7 @@ class CreateSiteDialog extends StudioDialog {
       stateId: "createSiteDialogState",
       stateful: true,
       modal: true,
-      width: 300,
+      width: 320,
       height: 750,
       constrainHeader: true,
       x: 600,
@@ -59,40 +64,82 @@ class CreateSiteDialog extends StudioDialog {
 
       items: [
         Config(TextField, {
-          fieldLabel: "Template Site Id",
+          fieldLabel: "Template",
           plugins: [Config(BindPropertyPlugin, {
             bindTo: ValueExpressionFactory.create(CreateSiteDialog.TEMPLATE_SITE_ID, this.getModel()),
             bidirectional: true,
           })],
         }),
-        Config(TextField, {
-          fieldLabel: "Site Name",
-          plugins: [Config(BindPropertyPlugin, {
-            bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_NAME, this.getModel()),
-            bidirectional: true,
-          })],
+        Config(Container, {
+          margin: "20 0 0 0",
+          items: [
+            Config(TextField, {
+              fieldLabel: "Site Name",
+              flex: 1,
+              plugins: [Config(BindPropertyPlugin, {
+                bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_NAME, this.getModel()),
+                bidirectional: true,
+              })],
+            }),
+            Config(AvailableLocalesComboBox, {
+              fieldLabel: "Locale",
+              flex: 1,
+              margin: "0 0 0 10",
+              bindTo: ValueExpressionFactory.createFromValue(this.getModel()),
+              propertyName: CreateSiteDialog.TARGET_LOCALE,
+            }),
+          ],
+          layout: Config(HBoxLayout, {
+            align: "stretch",
+            pack: "start",
+          }),
+          defaults: Config<BaseField>({
+            labelAlign: "top",
+            labelSeparator: "",
+          }),
         }),
-        Config(AvailableLocalesComboBox, {
-          fieldLabel: "Locale",
-          bindTo: ValueExpressionFactory.createFromValue(this.getModel()),
-          propertyName: CreateSiteDialog.TARGET_LOCALE,
+
+        Config(CheckboxField, {
+          boxLabel: "Automatically generate Site ID and URI segment",
+          plugins: [
+            Config(BindPropertyPlugin, {
+              bindTo: ValueExpressionFactory.create(CreateSiteDialog.AUTO_GENERATE_ID_AND_SEGMENT, this.getModel()),
+              bidirectional: true,
+            }),
+          ],
         }),
+
         Config(TextField, {
           fieldLabel: "Site ID",
-          plugins: [Config(BindPropertyPlugin, {
-            bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_ID, this.getModel()),
-            bidirectional: true,
-          })],
+          margin: "0 0 0 25",
+          plugins: [
+            Config(BindPropertyPlugin, {
+              bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_ID, this.getModel()),
+              bidirectional: true,
+            }),
+            Config(BindPropertyPlugin, {
+              bindTo: ValueExpressionFactory.create(CreateSiteDialog.AUTO_GENERATE_ID_AND_SEGMENT, this.getModel()),
+              componentProperty: "disabled",
+            }),
+          ],
         }),
         Config(TextField, {
           fieldLabel: "Site URI Segment",
-          plugins: [Config(BindPropertyPlugin, {
-            bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_URI_SEGMENT, this.getModel()),
-            bidirectional: true,
-          })],
+          margin: "0 0 0 25",
+          plugins: [
+            Config(BindPropertyPlugin, {
+              bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_URI_SEGMENT, this.getModel()),
+              bidirectional: true,
+            }),
+            Config(BindPropertyPlugin, {
+              bindTo: ValueExpressionFactory.create(CreateSiteDialog.AUTO_GENERATE_ID_AND_SEGMENT, this.getModel()),
+              componentProperty: "disabled",
+            }),
+          ],
         }),
         Config(TextField, {
           fieldLabel: "Site Manager Group",
+          margin: "20 0 0 0",
           plugins: [Config(BindPropertyPlugin, {
             bindTo: ValueExpressionFactory.create(CreateSiteDialog.TARGET_SITE_MANAGER_GROUP, this.getModel()),
             bidirectional: true,
@@ -143,9 +190,26 @@ class CreateSiteDialog extends StudioDialog {
       this.#model.set(CreateSiteDialog.TARGET_SITE_ID, "new-site-id");
       this.#model.set(CreateSiteDialog.TARGET_LOCALE, "en");
       this.#model.set(CreateSiteDialog.TARGET_SITE_URI_SEGMENT, "new-site");
-      this.#model.set(CreateSiteDialog.TARGET_SITE_MANAGER_GROUP, "global-manager ");
+      this.#model.set(CreateSiteDialog.TARGET_SITE_MANAGER_GROUP, "global-manager");
+      this.#model.set(CreateSiteDialog.AUTO_GENERATE_ID_AND_SEGMENT, true);
+      this.#model.addValueChangeListener(bind(this, this.#handleModelChange));
     }
     return this.#model;
+  }
+
+  #handleModelChange(): void {
+    console.log("MODEL CHANGED");
+    const siteName = this.getModel().get(CreateSiteDialog.TARGET_SITE_NAME);
+    const locale = this.getModel().get(CreateSiteDialog.TARGET_LOCALE);
+    const autoGenIDAndSegment = this.getModel().get(CreateSiteDialog.AUTO_GENERATE_ID_AND_SEGMENT);
+
+    if (autoGenIDAndSegment && siteName && locale) {
+      const tmpSiteName = siteName.toLowerCase().replaceAll(/[\W_]+/g, "");
+      const siteId: string = tmpSiteName + "-" + locale;
+      this.#model.set(CreateSiteDialog.TARGET_SITE_ID, siteId.toLowerCase());
+      this.#model.set(CreateSiteDialog.TARGET_SITE_URI_SEGMENT, encodeURIComponent(tmpSiteName));
+    }
+
   }
 
   #startCreateSiteWorkflow(): void {
