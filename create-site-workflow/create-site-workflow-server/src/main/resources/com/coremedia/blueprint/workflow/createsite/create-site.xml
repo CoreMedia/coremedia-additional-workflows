@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE Workflow SYSTEM "classpath:xml/coremedia-workflow.dtd">
+<!--
+          CoreMedia Clone Site Workflow for Studio
+-->
+
+<Workflow>
+  <Process name="CreateSite" description="Create a Site from a given template Site"
+           startTask="AssignUser">
+
+    <Rights>
+      <Grant group="administratoren" rights="read, create, start, suspend, resume, abort"/>
+    </Rights>
+
+    <Variable name="templateSiteId" type="String"/>
+    <Variable name="targetLocale" type="String"/>
+    <Variable name="targetSiteName" type="String"/>
+    <Variable name="targetSiteId" type="String"/>
+    <Variable name="targetSiteUriSegment" type="String"/>
+    <Variable name="targetSiteManagerGroup" type="String"/>
+
+    <InitialAssignment>
+      <Writes variable="templateSiteId"/>
+      <Writes variable="targetLocale"/>
+      <Writes variable="targetSiteName"/>
+      <Writes variable="targetSiteId"/>
+      <Writes variable="targetSiteUriSegment"/>
+      <Writes variable="targetSiteManagerGroup"/>
+    </InitialAssignment>
+
+    <Assignment>
+      <Writes variable="templateSiteId"/>
+      <Writes variable="targetLocale"/>
+      <Writes variable="targetSiteName"/>
+      <Writes variable="targetSiteId"/>
+      <Writes variable="targetSiteUriSegment"/>
+      <Writes variable="targetSiteManagerGroup"/>
+    </Assignment>
+
+    <AutomatedTask name="CreateSite">
+      <Action class="com.coremedia.blueprint.workflow.createsite.CreateSiteAction"
+              templateSiteIdVariable="templateSiteId"
+              targetLocaleVariable="targetLocale"
+              targetSiteNameVariable="targetSiteName"
+              targetSiteIdVariable="targetSiteId"
+              targetSiteUriSegmentVariable="targetSiteUriSegment"
+              targetSiteManagerGroupVariable="targetSiteManagerGroup"/>
+    </AutomatedTask>
+
+  </Process>
+</Workflow>
