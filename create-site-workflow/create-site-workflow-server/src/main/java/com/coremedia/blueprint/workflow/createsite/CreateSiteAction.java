@@ -4,17 +4,21 @@ import com.coremedia.cap.content.Content;
 import com.coremedia.cap.content.ContentRepository;
 import com.coremedia.cap.multisite.Site;
 import com.coremedia.cap.multisite.SitesService;
-import com.coremedia.cap.multisite.impl.CloneSiteMethod;
 import com.coremedia.cap.workflow.Process;
 import com.coremedia.cap.workflow.Task;
 import com.coremedia.cap.workflow.plugin.ActionResult;
 import com.coremedia.translate.workflow.RobotUserAction;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
 public class CreateSiteAction extends RobotUserAction {
 
   private static final long serialVersionUID = -5584637750075258451L;
+
+  private static final Function<Content, String> CONTENT_STRING_FUNCTION = c -> c + " [" + (c.isDestroyed() ? "" : c.getPath()) + "]";
 
   @Override
   public Object extractParameters(Task task) {
@@ -42,19 +46,24 @@ public class CreateSiteAction extends RobotUserAction {
 
     // Create root folder
     String targetSiteFolderPath = sitesService.computeDerivedSitePath(params.targetSiteName, params.targetLocale);
-    Content targetSiteRootFolder = contentRepository.getFolderContentType().create(contentRepository.getRoot(),targetSiteFolderPath);
+    Content targetSiteRootFolder = contentRepository.getFolderContentType().create(contentRepository.getRoot(), targetSiteFolderPath);
 
-    new CloneSiteMethod(sitesService).execute(
+    new CreateSiteMethod(sitesService).execute(
             templateSite.getSiteRootFolder(),
             params.targetSiteId,
             params.targetSiteName,
             params.targetLocale,
             params.targetSiteManagerGroup,
             params.targetSiteUriSegment,
-            targetSiteRootFolder,
-            null);
+            targetSiteRootFolder);
 
     Site createdSite = sitesService.getSite(params.targetSiteId);
+
+    // Set the desired site name
+    Optional.ofNullable(createdSite)
+            .map(Site::getSiteIndicator)
+            .ifPresent(i -> i.set("name", params.targetSiteName));
+
     return createdSite;
   }
 
