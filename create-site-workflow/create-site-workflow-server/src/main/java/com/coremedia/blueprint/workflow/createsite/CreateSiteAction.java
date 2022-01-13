@@ -57,14 +57,7 @@ public class CreateSiteAction extends RobotUserAction {
             params.targetSiteUriSegment,
             targetSiteRootFolder);
 
-    Site createdSite = sitesService.getSite(params.targetSiteId);
-
-    // Set the desired site name
-    Optional.ofNullable(createdSite)
-            .map(Site::getSiteIndicator)
-            .ifPresent(i -> i.set("name", params.targetSiteName));
-
-    return createdSite;
+    return sitesService.getSite(params.targetSiteId);
   }
 
   @Override
