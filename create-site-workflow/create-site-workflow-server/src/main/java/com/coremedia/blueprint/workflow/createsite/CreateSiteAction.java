@@ -58,6 +58,19 @@ public class CreateSiteAction extends RobotUserAction {
     return createdSite;
   }
 
+  @Override
+  public ActionResult storeResult(Task task, Object result) {
+    checkNotAborted(task);
+
+    if (result instanceof Exception) {
+      return storeResultException(task, (Exception) result);
+    }
+
+    Site createdSite = (Site) result;
+    task.getContainingProcess().set(targetSiteIdVariable, createdSite.getId());
+
+    return new ActionResult(true);
+  }
 
   // --------------------------------------------------- bean parser ------------------------------------------------ //
 
