@@ -72,6 +72,9 @@ workflowLocalizationRegistry._.addLocalization("StudioThreeStepPublication", {
       displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_Publish_displayName,
       confirm: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_DoPublish_confirm,
     },
-    DoPublish: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_task_DoPublish_displayName,
+    DoPublish: {
+      displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_DoPublish_displayName,
+      confirm: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_DoPublish_confirm,
+    },
   },
 });

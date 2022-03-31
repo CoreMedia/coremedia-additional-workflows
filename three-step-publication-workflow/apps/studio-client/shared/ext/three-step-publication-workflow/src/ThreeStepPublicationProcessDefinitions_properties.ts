@@ -20,14 +20,14 @@ const ThreeStepPublicationProcessDefinitions_properties: ThreeStepPublicationPro
   StudioThreeStepPublication_displayName: "Reviewed and Confirmed Publication",
 
   StudioThreeStepPublication_task_Compose_displayName: "Compose",
-  StudioThreeStepPublication_task_Approve_displayName: "Approve",
+  StudioThreeStepPublication_task_Approve_displayName: "Review",
   StudioThreeStepPublication_task_Publish_displayName: "Confirm",
   StudioThreeStepPublication_task_DoPublish_displayName: "Publish",
 
-  StudioThreeStepPublication_state_Compose_displayName: "Compose",
-  StudioThreeStepPublication_state_Approve_displayName: "Approve",
-  StudioThreeStepPublication_state_Publish_displayName: "Confirm",
-  StudioThreeStepPublication_state_DoPublish_displayName: "Publish",
+  StudioThreeStepPublication_state_Compose_displayName: "Compose content",
+  StudioThreeStepPublication_state_Approve_displayName: "Review changes",
+  StudioThreeStepPublication_state_Publish_displayName: "Confirm changes",
+  StudioThreeStepPublication_state_DoPublish_displayName: "Finalize publication",
 
   StudioThreeStepPublication_state_Compose_confirm: "The content in this workflow needs revision. The workflow is automatically offered to all eligible people.<br><br>Do you wish to continue?",
   StudioThreeStepPublication_state_Approve_confirm: "The content in this workflow needs revision. The workflow is automatically offered to all eligible people.<br><br>Do you wish to continue?",
