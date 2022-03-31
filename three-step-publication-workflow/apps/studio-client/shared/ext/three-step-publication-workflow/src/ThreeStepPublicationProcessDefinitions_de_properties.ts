@@ -12,7 +12,7 @@ ResourceBundleUtil.override(ThreeStepPublicationProcessDefinitions_properties, {
   StudioThreeStepPublication_state_Compose_displayName: "Inhalte bearbeiten",
   StudioThreeStepPublication_state_Approve_displayName: "Inhalte freigeben",
   StudioThreeStepPublication_state_Publish_displayName: "Freigabe best\u00E4tigen",
-  StudioThreeStepPublication_state_DoPublish_displayName: "Inhalte Publizieren",
+  StudioThreeStepPublication_state_DoPublish_displayName: "Inhalte publizieren",
 
   StudioThreeStepPublication_state_Compose_confirm: "Die Inhalte des Workflows sollen überarbeitet werden. Der Workflow wird automatisch allen berechtigten Personen angeboten.<br/><br/>Möchten Sie fortfahren?",
   StudioThreeStepPublication_state_Approve_confirm: "Die Inhalte des Workflows sollen überarbeitet werden. Der Workflow wird automatisch allen berechtigten Personen angeboten.<br/><br/>Möchten Sie fortfahren?",
