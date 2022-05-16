@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import java.util.List;
-
-import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.DEFAULT_PUBLICATION_VALIDATORS;
 import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.PUBLICATION_VALIDATION_PREPARATION;
 import static java.util.Arrays.asList;
 
@@ -26,9 +23,7 @@ public class ScheduledPublicationWorkflowConfiguration {
 
   @Bean
   WorkflowValidatorsModel scheduledPublicationWorkflowValidators(
-          @Qualifier(PUBLICATION_VALIDATION_PREPARATION) WorkflowValidationPreparation publicationValidationPreparation,
-          @Qualifier(DEFAULT_PUBLICATION_VALIDATORS) List<WorkflowValidator> defaultPublicationValidators
-  ) {
+          @Qualifier(PUBLICATION_VALIDATION_PREPARATION) WorkflowValidationPreparation publicationValidationPreparation) {
     DateLiesInFutureValidator scheduledDateValidator = new DateLiesInFutureValidator(SCHEDULED_DATE_PROPERTY_NAME);
 
     return new WorkflowValidatorsModel(SCHEDULED_PUBLICATION_WORKFLOW_NAME, null,
