@@ -209,8 +209,8 @@ class CreateSiteDialog extends StudioDialog {
 
     // Load template sites
     const templateSites = editorContext._.getSitesService()
-      .getSites()
-      .filter((site: Site) => site.getId().startsWith(CreateSiteWorkflowStudioPlugin_properties.CreateSiteDialog_templateSitesIdPrefix));
+      .getSites();
+    //.filter((site: Site) => site.getId().startsWith(CreateSiteWorkflowStudioPlugin_properties.CreateSiteDialog_templateSitesIdPrefix));
     this.getModel().set(CreateSiteDialog.TEMPLATE_SITES, templateSites);
   }
 

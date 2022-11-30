@@ -161,6 +161,10 @@ public class CreateSiteMethod {
         if (masterAspect.hasSiteLocale() && clonedSiteLocale != null) {
           anythingWritten = cloneAspect.setLocale(Locale.forLanguageTag(clonedSiteLocale));
         }
+
+        anythingWritten = cloneAspect.setMaster(null) || anythingWritten;
+
+
 //        anythingWritten |= cloneAspect.setMaster(master);
 
 //        boolean negateVersionNumber = true;
