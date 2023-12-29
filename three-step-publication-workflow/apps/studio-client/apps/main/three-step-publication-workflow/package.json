@@ -1,0 +1,44 @@
+{
+  "name": "@coremedia-labs/studio-client.ext.three-step-publication-workflow-studio-client.main",
+  "author": "CoreMedia GmbH",
+  "version": "1.0.0-SNAPSHOT",
+  "license": "CoreMedia Open Source License",
+  "private": true,
+  "dependencies": {
+    "@coremedia-labs/studio-client.ext.three-step-publication-workflow-studio-client": "1.0.0-SNAPSHOT"
+  },
+  "devDependencies": {
+    "@jangaroo/build": "^1.4.2",
+    "@jangaroo/core": "^1.4.2",
+    "@jangaroo/eslint-config": "^1.4.2",
+    "@jangaroo/publish": "^1.4.2",
+    "eslint": "^7.32.0",
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist && rimraf ./build",
+    "build": "jangaroo build",
+    "watch": "jangaroo watch",
+    "publish": "jangaroo publish",
+    "lint": "eslint --fix \"src/**/*.ts\""
+  },
+  "exports": {
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "coremedia": {
+    "projectExtensionFor": "studio-client.main"
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": false,
+    "exports": {
+      "./*": {
+        "types": "./src/*.d.ts",
+        "default": "./src/*.js"
+      }
+    }
+  }
+}

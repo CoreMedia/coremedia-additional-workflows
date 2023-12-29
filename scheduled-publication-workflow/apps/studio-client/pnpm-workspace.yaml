@@ -1,0 +1,4 @@
+packages:
+  - "apps/main/scheduled-publication-workflow"
+  - "apps/workflow/scheduled-publication-workflow"
+  - "shared/ext/scheduled-publication-workflow"

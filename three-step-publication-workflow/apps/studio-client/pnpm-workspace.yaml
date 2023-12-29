@@ -1,0 +1,4 @@
+packages:
+  - "apps/main/three-step-publication-workflow"
+  - "apps/workflow/three-step-publication-workflow"
+  - "shared/ext/three-step-publication-workflow"
