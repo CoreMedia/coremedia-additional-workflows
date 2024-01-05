@@ -48,13 +48,18 @@ To find the matching version of your CoreMedia system, please checkout the branc
 
 - From the project's root directory, clone this repository as a submodule of the `modules/extensions` directory.
 - Make sure to use the branch name that matches your workspace version.
-```
+```shell
 git submodule add https://github.com/coremedia-contributions/coremedia-blueprints-workspace modules/extensions/additional-workflows
 ```
 
 - Use the extension tool in the root folder of the project to link the modules to your workspace.
- ```
-mvn extensions:sync -f workspace-configuration/extensions -Denable=additional-workflows
+ ```shell
+# Enable both workflows ...
+mvn extensions:sync -f workspace-configuration/extensions -Denable=scheduled-publication-workflow,three-step-publication-workflow
+
+# ... or just one of them
+mvn extensions:sync -f workspace-configuration/extensions -Denable=scheduled-publication-workflow
+mvn extensions:sync -f workspace-configuration/extensions -Denable=three-step-publication-workflow
 ```
 
 
