@@ -13,18 +13,21 @@ import com.coremedia.rest.cap.workflow.validation.model.WorkflowValidatorsModel;
 import com.coremedia.rest.cap.workflow.validation.preparation.WorkflowValidationPreparation;
 import com.coremedia.springframework.customizer.Customize;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.*;
+import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.APPROVE_TASK_NAME;
+import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.COMPOSE_TASK_NAME;
+import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.PUBLICATION_VALIDATION_PREPARATION;
+import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.PUBLISH_TASK_NAME;
 
-@Configuration
-public class ThreeStepPublicationWorkflowConfiguration {
+@AutoConfiguration
+public class ThreeStepPublicationWorkflowAutoConfiguration {
 
   private static final String THREE_STEP_PUBLICATION_WORKFLOW_NAME = "StudioThreeStepPublication";
   private static final String THREE_STEP_PUBLICATION_WORKFLOW_VALIDATORS = "StudioThreeStepPublication";
