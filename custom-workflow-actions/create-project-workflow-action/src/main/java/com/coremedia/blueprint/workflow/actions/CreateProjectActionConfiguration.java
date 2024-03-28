@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan(basePackages = {"com.coremedia.notification"})
+@ComponentScan(basePackages = {"com.coremedia.collaboration.project"})
 @Import({
         ProjectConfiguration.class,
         TodoConfiguration.class})
