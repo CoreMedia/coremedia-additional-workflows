@@ -11,6 +11,7 @@
   <modules>
     <module>scheduled-publication-workflow-studio-lib</module>
     <module>scheduled-publication-workflow-server</module>
+    <module>content</module>
   </modules>
 
 </project>

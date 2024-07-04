@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>create-site-workflow</artifactId>
+  <artifactId>simple-publication-workflow</artifactId>
   <groupId>com.coremedia.blueprint</groupId>
   <version>1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
-    <module>create-site-workflow-server</module>
+    <module>simple-publication-workflow-server</module>
     <module>content</module>
   </modules>
 

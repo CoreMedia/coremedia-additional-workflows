@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
+
+  <!-- groups for scheduled-publication workflow -->
+  <group name="wf--scheduled-publication--abort" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--scheduled-publication--create" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--scheduled-publication--read" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--scheduled-publication--resume" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--scheduled-publication--start" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--scheduled-publication--suspend" contentgroup="true" livegroup="false" administrative="false"/>
+
+</repository>

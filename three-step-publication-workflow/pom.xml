@@ -12,6 +12,7 @@
     <module>three-step-publication-workflow-studio-lib</module>
     <module>three-step-publication-workflow-user-changes</module>
     <module>three-step-publication-workflow-server</module>
+    <module>content</module>
   </modules>
 
 </project>

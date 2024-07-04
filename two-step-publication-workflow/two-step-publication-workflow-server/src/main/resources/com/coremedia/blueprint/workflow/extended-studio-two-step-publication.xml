@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <!--
-          CoreMedia Three Step Publication Workflow for Studio
+          CoreMedia Two Step Publication Workflow for Studio
 -->
 <Workflow>
-  <Process name="StudioThreeStepPublication" description="studio-three-step-publication"
+  <Process name="StudioTwoStepPublication" description="studio-two-step-publication"
            startTask="AssignUser">
 
     <Rights>
       <Grant group="administratoren" rights="read, write, create, start, suspend, resume, abort"/>
       <Grant group="composer-role" rights="read, write, create, start, suspend, resume, abort"/>
       <Grant group="approver-role" rights="read, write"/>
-      <Grant group="publisher-role" rights="read, write"/>
+      <Grant group="publisher-role" rights="read"/>
       <!-- SALESDEMO: Additional groups for fine-grained control -->
-      <Grant group="wf--three-step-publication--abort" rights="abort"/>
-      <Grant group="wf--three-step-publication--create" rights="create"/>
-      <Grant group="wf--three-step-publication--read" rights="read"/>
-      <Grant group="wf--three-step-publication--resume" rights="resume"/>
-      <Grant group="wf--three-step-publication--start" rights="start"/>
-      <Grant group="wf--three-step-publication--suspend" rights="suspend"/>
-      <Grant group="wf--three-step-publication--write" rights="write"/>
+      <Grant group="wf--two-step-publication--abort" rights="abort"/>
+      <Grant group="wf--two-step-publication--create" rights="create"/>
+      <Grant group="wf--two-step-publication--read" rights="read"/>
+      <Grant group="wf--two-step-publication--resume" rights="resume"/>
+      <Grant group="wf--two-step-publication--start" rights="start"/>
+      <Grant group="wf--two-step-publication--suspend" rights="suspend"/>
+      <Grant group="wf--two-step-publication--write" rights="write"/>
     </Rights>
 
     <Variable name="subject" type="String"/>
     <Variable name="comment" type="String"/>
     <AggregationVariable name="assignedUsers_Approve" type="User"/>
     <AggregationVariable name="assignedGroups_Approve" type="Group"/>
-    <AggregationVariable name="assignedUsers_Publish" type="User"/>
-    <AggregationVariable name="assignedGroups_Publish" type="Group"/>
     <AggregationVariable name="changeSet" type="Resource"/>
     <AggregationVariable name="comments" type="String"/>
 
@@ -35,10 +33,9 @@
       <Boolean value="true"/>
     </Variable>
     <Variable name="contentNotLockedForPerformerOfTasks" type="String">
-      <String value="Compose,Approve,Publish"/>
+      <String value="Compose,Approve"/>
     </Variable>
-    <Variable name="nextSelectedTask" type="String">
-    </Variable>
+    <Variable name="nextSelectedTask" type="String"/>
     <Variable name="publicationSuccessful" type="Boolean">
       <Boolean value="false"/>
     </Variable>
@@ -54,8 +51,6 @@
       <Writes variable="comments"/>
       <Writes variable="assignedUsers_Approve"/>
       <Writes variable="assignedGroups_Approve"/>
-      <Writes variable="assignedUsers_Publish"/>
-      <Writes variable="assignedGroups_Publish"/>
     </InitialAssignment>
 
     <Assignment>
@@ -65,14 +60,11 @@
       <Reads variable="comments"/>
       <Reads variable="assignedUsers_Approve"/>
       <Reads variable="assignedGroups_Approve"/>
-      <Reads variable="assignedUsers_Publish"/>
-      <Reads variable="assignedGroups_Publish"/>
     </Assignment>
 
     <AutomatedTask name="AssignUser"
                    description="assignuser-task" successor="CheckEmptyChangeSet">
       <Action class="ExcludeUser" task="Approve" userVariable="OWNER_"/>
-      <Action class="ExcludeUser" task="Publish" userVariable="OWNER_"/>
       <Action class="RegisterPendingProcess" userVariable="OWNER_"/>
     </AutomatedTask>
 
@@ -85,20 +77,20 @@
     </If>
 
     <UserTask name="Approve"
-              description="studio-three-step-publication-approve-task"
+              description="studio-two-step-publication-approve-task"
               successor="PublishOrCompose" reexecutable="true">
       <Performers policyClass="com.coremedia.cap.workflow.plugin.AssignableResourcePermissionsPerformersPolicy"
                   assignedUsersVariable="assignedUsers_Approve"
                   assignedGroupsVariable="assignedGroups_Approve"
-                  rights="approve"/>
+                  rights="approve, publish"/>
       <Rights>
         <Grant group="administratoren" rights="read, accept, cancel, delegate, reject"/>
         <Grant group="approver-role" rights="read, accept, cancel, delegate, reject"/>
       </Rights>
 
       <Assignment>
-        <Reads variable="assignedUsers_Approve"/>
-        <Reads variable="assignedGroups_Approve"/>
+        <Writes variable="assignedUsers_Approve"/>
+        <Writes variable="assignedGroups_Approve"/>
         <Reads variable="subject"/>
         <Writes variable="comment"/>
         <Reads description="approve-changeSet" variable="changeSet" contentEditable="false"/>
@@ -108,16 +100,8 @@
       </Assignment>
 
       <ExitAction class="ExcludePerformer" task="Compose"/>
-      <ExitAction class="ExcludePerformer" task="Publish"/>
+      <ExitAction class="ForceUser" task="Publish"/>
       <ExitAction class="RegisterPendingProcess"/>
-
-      <ExitAction class="ApproveResource" gui="true"
-                  resourceVariable="changeSet"
-                  successVariable="publicationSuccessful"
-                  ignoreErrors="true"
-                  timeout="180"
-                  userVariable="PERFORMER_">
-      </ExitAction>
     </UserTask>
 
     <If name="PublishOrCompose">
@@ -132,51 +116,11 @@
     </If>
 
     <UserTask name="Publish"
-              description="studio-three-step-publication-approve-task"
-              successor="ApproveOrDoPublish" reexecutable="true">
-      <Performers policyClass="com.coremedia.cap.workflow.plugin.AssignableResourcePermissionsPerformersPolicy"
-                  assignedUsersVariable="assignedUsers_Publish"
-                  assignedGroupsVariable="assignedGroups_Publish"
-                  rights="publish"/>
-      <Rights>
-        <Grant group="administratoren" rights="read, accept, cancel, delegate, reject"/>
-        <Grant group="publisher-role" rights="read, accept, cancel, delegate, reject"/>
-      </Rights>
-
-      <Assignment>
-        <Reads variable="assignedUsers_Publish"/>
-        <Reads variable="assignedGroups_Publish"/>
-        <Reads variable="subject"/>
-        <Writes variable="comment"/>
-        <Reads description="approve-changeSet" variable="changeSet" contentEditable="false"/>
-        <Writes variable="comments"/>
-        <Reads variable="publicationResultCodes"/>
-        <Writes variable="nextSelectedTask"/>
-      </Assignment>
-
-      <ExitAction class="ExcludePerformer" task="Compose"/>
-      <ExitAction class="ExcludePerformer" task="Approve"/>
-      <ExitAction class="ForceUser" task="DoPublish"/>
-      <ExitAction class="RegisterPendingProcess"/>
-    </UserTask>
-
-    <If name="ApproveOrDoPublish">
-      <Condition>
-        <Equal>
-          <String value="Approve"/>
-          <Get variable="nextSelectedTask"/>
-        </Equal>
-      </Condition>
-      <Then successor="Approve"/>
-      <Else successor="DoPublish"/>
-    </If>
-
-    <UserTask name="DoPublish"
-              description="studio-three-step-publication-publish-task"
+              description="studio-two-step-publication-publish-task"
               successor="CheckPublication" reexecutable="true" autoAccepted="true" autoCompleted="true">
       <Rights>
         <Grant group="administratoren" rights="read, accept, cancel, delegate, reject"/>
-        <Grant group="publisher-role" rights="read, accept, cancel, delegate, reject"/>
+        <Grant group="approver-role" rights="read, accept, cancel, delegate, reject"/>
       </Rights>
 
       <Assignment>
@@ -185,6 +129,14 @@
         <Reads description="publish-changeSet" variable="changeSet" contentEditable="false"/>
         <Reads variable="comments"/>
       </Assignment>
+
+      <EntryAction class="ApproveResource" gui="true"
+                   resourceVariable="changeSet"
+                   successVariable="publicationSuccessful"
+                   ignoreErrors="true"
+                   timeout="180"
+                   userVariable="PERFORMER_">
+      </EntryAction>
 
       <EntryAction class="PublishResources" gui="true"
                    resourceVariable="changeSet"
@@ -206,7 +158,7 @@
     </If>
 
     <UserTask name="Compose"
-              description="studio-three-step-publication-compose-task"
+              description="studio-two-step-publication-compose-task"
               successor="CheckEmptyChangeSet" reexecutable="true">
       <Performers policyClass="com.coremedia.cap.workflow.plugin.ResourcePermissionsPerformersPolicy"
                   rights="write"/>
@@ -227,23 +179,18 @@
       </Assignment>
 
       <ExitAction class="ExcludePerformer" task="Approve"/>
-      <ExitAction class="ExcludePerformer" task="Publish"/>
       <ExitAction class="RegisterPendingProcess"/>
     </UserTask>
-
-    <Variable name="finishTaskRetryTimer" type="Timer"/>
-    <TimerHandler class="RetryTaskTimerHandler" task="Finish" timerName="finishTaskRetryTimer"/>
 
     <AutomatedTask name="Finish" final="true">
       <Action class="AssignVariable" resultVariable="changeSetLockedInStudio">
         <Boolean value="false"/>
       </Action>
-      <Action class="AssignVariable" resultVariable="finishTaskRetryTimer">
-        <Timer value="30"/>
-      </Action>
-      <Action class="EnableTimer" timerVariable="finishTaskRetryTimer"/>
-      <Action class="ArchiveProcess" maxProcessesPerUser="100"/>
     </AutomatedTask>
+
+    <!-- Finally, make sure finished processes are archived and appear in the list of finished workflows for
+         participating users, i.e. for users for whom the RegisterPendingProcess action was called. -->
+    <FinalAction class="ArchiveProcessFinalAction" maxProcessesPerUser="100"/>
 
   </Process>
 </Workflow>

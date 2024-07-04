@@ -10,6 +10,13 @@
 
     <Rights>
       <Grant group="administratoren" rights="read, create, start, suspend, resume, abort"/>
+      <!-- SALESDEMO: Additional groups for fine-grained control -->
+      <Grant group="wf--create-site--abort" rights="abort"/>
+      <Grant group="wf--create-site--create" rights="create"/>
+      <Grant group="wf--create-site--read" rights="read"/>
+      <Grant group="wf--create-site--resume" rights="resume"/>
+      <Grant group="wf--create-site--start" rights="start"/>
+      <Grant group="wf--create-site--suspend" rights="suspend"/>
     </Rights>
 
     <Variable name="templateSiteId" type="String"/>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
+
+  <!-- groups for create-site workflow -->
+  <group name="wf--create-site--abort" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--create-site--create" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--create-site--read" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--create-site--resume" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--create-site--start" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--create-site--suspend" contentgroup="true" livegroup="false" administrative="false"/>
+
+</repository>

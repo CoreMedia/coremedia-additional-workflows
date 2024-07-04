@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
+
+  <!-- groups for two-step-publication workflow -->
+  <group name="wf--two-step-publication--abort" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--two-step-publication--create" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--two-step-publication--read" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--two-step-publication--resume" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--two-step-publication--start" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--two-step-publication--suspend" contentgroup="true" livegroup="false" administrative="false"/>
+  <group name="wf--two-step-publication--write" contentgroup="true" livegroup="false" administrative="false"/>
+
+</repository>
