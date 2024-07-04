@@ -1,13 +1,67 @@
 <?xml version="1.0"?>
 <repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
 
-  <!-- groups for three-step-publication workflow -->
-  <group name="wf--three-step-publication--abort" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--three-step-publication--create" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--three-step-publication--read" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--three-step-publication--resume" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--three-step-publication--start" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--three-step-publication--suspend" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--three-step-publication--write" contentgroup="true" livegroup="false" administrative="false"/>
+  <!--
+  groups for three-step-publication workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--three-step-publication--composer-role"
+         name="wf--three-step-publication--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--three-step-publication--approver-role"
+         name="wf--three-step-publication--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--three-step-publication--publisher-role"
+         name="wf--three-step-publication--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--three-step-publication--abort" name="wf--three-step-publication--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--three-step-publication--create" name="wf--three-step-publication--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--three-step-publication--read" name="wf--three-step-publication--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+      <groupref id="wf--three-step-publication--approver-role"/>
+      <groupref id="wf--three-step-publication--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--three-step-publication--resume" name="wf--three-step-publication--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--three-step-publication--start" name="wf--three-step-publication--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--three-step-publication--suspend" name="wf--three-step-publication--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--three-step-publication--write" name="wf--three-step-publication--write" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--three-step-publication--composer-role"/>
+    </members>
+  </group>
 
 </repository>

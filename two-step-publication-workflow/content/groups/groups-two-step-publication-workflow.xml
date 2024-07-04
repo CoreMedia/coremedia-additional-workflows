@@ -1,13 +1,67 @@
 <?xml version="1.0"?>
 <repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
 
-  <!-- groups for two-step-publication workflow -->
-  <group name="wf--two-step-publication--abort" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--two-step-publication--create" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--two-step-publication--read" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--two-step-publication--resume" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--two-step-publication--start" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--two-step-publication--suspend" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--two-step-publication--write" contentgroup="true" livegroup="false" administrative="false"/>
+  <!--
+  groups for two-step-publication workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--two-step-publication--composer-role"
+         name="wf--two-step-publication--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--two-step-publication--approver-role"
+         name="wf--two-step-publication--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--two-step-publication--publisher-role"
+         name="wf--two-step-publication--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--two-step-publication--abort" name="wf--two-step-publication--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--two-step-publication--create" name="wf--two-step-publication--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--two-step-publication--read" name="wf--two-step-publication--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+      <groupref id="wf--two-step-publication--approver-role"/>
+      <groupref id="wf--two-step-publication--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--two-step-publication--resume" name="wf--two-step-publication--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--two-step-publication--start" name="wf--two-step-publication--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--two-step-publication--suspend" name="wf--two-step-publication--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--two-step-publication--write" name="wf--two-step-publication--write" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--two-step-publication--composer-role"/>
+    </members>
+  </group>
 
 </repository>

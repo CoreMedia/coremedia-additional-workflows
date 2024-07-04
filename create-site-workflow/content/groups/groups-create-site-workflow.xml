@@ -1,12 +1,61 @@
 <?xml version="1.0"?>
 <repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
 
-  <!-- groups for create-site workflow -->
-  <group name="wf--create-site--abort" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--create-site--create" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--create-site--read" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--create-site--resume" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--create-site--start" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--create-site--suspend" contentgroup="true" livegroup="false" administrative="false"/>
+  <!--
+  groups for create-site workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--create-site--composer-role"
+         name="wf--create-site--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--create-site--approver-role"
+         name="wf--create-site--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--create-site--publisher-role"
+         name="wf--create-site--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--create-site--abort" name="wf--create-site--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--create-site--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--create-site--create" name="wf--create-site--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--create-site--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--create-site--read" name="wf--create-site--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--create-site--composer-role"/>
+      <groupref id="wf--create-site--approver-role"/>
+      <groupref id="wf--create-site--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--create-site--resume" name="wf--create-site--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--create-site--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--create-site--start" name="wf--create-site--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--create-site--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--create-site--suspend" name="wf--create-site--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--create-site--composer-role"/>
+    </members>
+  </group>
 
 </repository>

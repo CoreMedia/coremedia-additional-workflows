@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
+
+  <!--
+  groups for simple-publication workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--simple-publication--composer-role"
+         name="wf--simple-publication--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--simple-publication--approver-role"
+         name="wf--simple-publication--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--simple-publication--publisher-role"
+         name="wf--simple-publication--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--simple-publication--abort" name="wf--simple-publication--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--simple-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--simple-publication--create" name="wf--simple-publication--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--simple-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--simple-publication--read" name="wf--simple-publication--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--simple-publication--composer-role"/>
+      <groupref id="wf--simple-publication--approver-role"/>
+      <groupref id="wf--simple-publication--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--simple-publication--resume" name="wf--simple-publication--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--simple-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--simple-publication--start" name="wf--simple-publication--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--simple-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--simple-publication--suspend" name="wf--simple-publication--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--simple-publication--composer-role"/>
+    </members>
+  </group>
+
+</repository>

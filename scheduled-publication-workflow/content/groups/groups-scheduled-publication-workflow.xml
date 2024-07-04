@@ -1,12 +1,61 @@
 <?xml version="1.0"?>
 <repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
 
-  <!-- groups for scheduled-publication workflow -->
-  <group name="wf--scheduled-publication--abort" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--scheduled-publication--create" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--scheduled-publication--read" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--scheduled-publication--resume" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--scheduled-publication--start" contentgroup="true" livegroup="false" administrative="false"/>
-  <group name="wf--scheduled-publication--suspend" contentgroup="true" livegroup="false" administrative="false"/>
+  <!--
+  groups for scheduled-publication workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--scheduled-publication--composer-role"
+         name="wf--scheduled-publication--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--scheduled-publication--approver-role"
+         name="wf--scheduled-publication--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--scheduled-publication--publisher-role"
+         name="wf--scheduled-publication--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--scheduled-publication--abort" name="wf--scheduled-publication--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--scheduled-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--scheduled-publication--create" name="wf--scheduled-publication--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--scheduled-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--scheduled-publication--read" name="wf--scheduled-publication--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--scheduled-publication--composer-role"/>
+      <groupref id="wf--scheduled-publication--approver-role"/>
+      <groupref id="wf--scheduled-publication--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--scheduled-publication--resume" name="wf--scheduled-publication--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--scheduled-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--scheduled-publication--start" name="wf--scheduled-publication--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--scheduled-publication--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--scheduled-publication--suspend" name="wf--scheduled-publication--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--scheduled-publication--composer-role"/>
+    </members>
+  </group>
 
 </repository>
