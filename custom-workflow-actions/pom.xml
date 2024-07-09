@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <cm.version>2404.2</cm.version>
+    <cm.version>2406.0.0</cm.version>
   </properties>
 
   <modules>
