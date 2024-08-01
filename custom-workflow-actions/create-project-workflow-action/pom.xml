@@ -32,6 +32,11 @@
 
     <dependency>
       <groupId>com.coremedia.cms</groupId>
+      <artifactId>collaboration-project-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
       <artifactId>project-elastic</artifactId>
     </dependency>
 
@@ -48,6 +53,11 @@
 
 
     <!-- THIRD-PARTY dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.github.spotbugs</groupId>
       <artifactId>spotbugs-annotations</artifactId>
