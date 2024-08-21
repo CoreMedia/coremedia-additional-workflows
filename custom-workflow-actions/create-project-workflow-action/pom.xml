@@ -14,7 +14,7 @@
 
   <properties>
     <coremedia.project.extension.for>workflow-server</coremedia.project.extension.for>
-    <cm.middle.core.version>2406.0.1</cm.middle.core.version>
+    <cm.middle.core.version>2406.0.2</cm.middle.core.version>
   </properties>
 
   <dependencies>
