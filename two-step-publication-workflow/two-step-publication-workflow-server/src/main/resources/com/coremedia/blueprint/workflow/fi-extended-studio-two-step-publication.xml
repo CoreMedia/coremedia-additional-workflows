@@ -39,6 +39,9 @@
     <Variable name="publicationSuccessful" type="Boolean">
       <Boolean value="false"/>
     </Variable>
+    <Variable name="approvalSuccessful" type="Boolean">
+      <Boolean value="false"/>
+    </Variable>
     <AggregationVariable name="publicationResultResources" type="Resource"/>
     <AggregationVariable name="publicationResultCodes" type="Integer"/>
     <AggregationVariable name="publicationResultVersions" type="Integer"/>
@@ -73,7 +76,25 @@
         <IsEmpty variable="changeSet"/>
       </Condition>
       <Then successor="Finish"/>
-      <Else successor="Approve"/>
+      <Else successor="PreApprove"/>
+    </If>
+    <!-- approve all items before going to review task -->
+    <AutomatedTask name="PreApprove" successor="CheckApproval">
+      <Action class="ApproveResource" gui="true"
+                   resourceVariable="changeSet"
+                   successVariable="approvalSuccessful"
+                   ignoreErrors="true"
+                   timeout="180"
+                   userVariable="OWNER_">
+      </Action>
+    </AutomatedTask>
+
+    <If name="CheckApproval">
+      <Condition>
+        <Get variable="approvalSuccessful"/>
+      </Condition>
+      <Then successor="Approve"/>
+      <Else successor="Compose"/>
     </If>
 
     <UserTask name="Approve"
@@ -129,14 +150,6 @@
         <Reads description="publish-changeSet" variable="changeSet" contentEditable="false"/>
         <Reads variable="comments"/>
       </Assignment>
-
-      <EntryAction class="ApproveResource" gui="true"
-                   resourceVariable="changeSet"
-                   successVariable="publicationSuccessful"
-                   ignoreErrors="true"
-                   timeout="180"
-                   userVariable="PERFORMER_">
-      </EntryAction>
 
       <EntryAction class="PublishResources" gui="true"
                    resourceVariable="changeSet"
