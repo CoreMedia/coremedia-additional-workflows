@@ -147,7 +147,6 @@
       <Action class="AssignVariable" resultVariable="changeSetLockedInStudio">
         <Boolean value="false"/>
       </Action>
-      <Action class="ArchiveProcess" maxProcessesPerUser="100"/>
     </AutomatedTask>
 
     <!-- Finally, make sure finished processes are archived and appear in the list of finished workflows for
