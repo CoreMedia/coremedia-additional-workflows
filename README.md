@@ -1,6 +1,6 @@
 ![CoreMedia Labs Logo](https://documentation.coremedia.com/badges/banner_coremedia_labs_wide.png "CoreMedia Labs Logo")
 
-![CoreMedia Content Cloud Version](https://img.shields.io/static/v1?message=2110&label=CoreMedia%20Content%20Cloud&style=for-the-badge&labelColor=666666&color=672779 
+![CoreMedia Content Cloud Version](https://img.shields.io/static/v1?message=2406&label=CoreMedia%20Content%20Cloud&style=for-the-badge&labelColor=666666&color=672779 
 "This badge shows the CoreMedia version this project is compatible with. 
 Please read the versioning section of the project to see what other CoreMedia versions are supported and how to find them."
 )
@@ -27,19 +27,15 @@ Keep the references to the workflow you want to use and delete the references to
 
 ## Versioning
 
-To find out which CoreMedia versions are supported by this project, please take look at the releases section or on the existing branches. 
-To find the matching version of your CoreMedia system, please checkout the branch with the corresponding name. For example, if your CoreMedia version is 2007.1, checkout the branch 2007.1.
+To find out which CoreMedia versions are supported by this project, please take look at the existing branches. 
+To find the matching version of your CoreMedia system, please checkout the branch with the corresponding name. For example, if your CoreMedia version is 2406.0.1, checkout the branch 2406.0.
 
 
 ## Documentation & Tutorial
 
 * **Documentation**
 
-    Each workflow extension has its own documentation.    
-
-* **[Changelog](CHANGELOG.md)**
-
-    for recent changes
+    Each workflow extension has its own documentation.
 
 * **[Issues](https://github.com/CoreMedia/coremedia-additional-workflows/issues)**
 
