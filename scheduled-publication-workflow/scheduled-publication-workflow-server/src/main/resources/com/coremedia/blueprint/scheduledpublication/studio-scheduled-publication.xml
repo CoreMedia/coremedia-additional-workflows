@@ -147,8 +147,9 @@
         <Timer value="30"/>
       </Action>
       <Action class="EnableTimer" timerVariable="finishTaskRetryTimer"/>
-      <Action class="ArchiveProcess" maxProcessesPerUser="100"/>
     </AutomatedTask>
+
+    <FinalAction class="ArchiveProcessFinalAction" maxProcessesPerUser="100"/>
 
   </Process>
 </Workflow>
