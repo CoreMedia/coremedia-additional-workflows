@@ -231,6 +231,8 @@
       <ExitAction class="RegisterPendingProcess"/>
     </UserTask>
 
+    <!-- Finally, make sure finished processes are archived and appear in the list of finished workflows for
+            participating users, i.e. for users for whom the RegisterPendingProcess action was called. -->
     <FinalAction class="ArchiveProcessFinalAction" maxProcessesPerUser="100"/>
 
   </Process>
