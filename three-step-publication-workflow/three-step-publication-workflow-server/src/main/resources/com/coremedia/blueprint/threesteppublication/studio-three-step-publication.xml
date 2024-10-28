@@ -231,6 +231,13 @@
       <ExitAction class="RegisterPendingProcess"/>
     </UserTask>
 
+    <AutomatedTask name="Finish" final="true">
+      <Action class="AssignVariable" resultVariable="changeSetLockedInStudio">
+        <Boolean value="false"/>
+      </Action>
+      <Action class="ArchiveProcess" maxProcessesPerUser="100"/>
+    </AutomatedTask>
+
     <!-- Finally, make sure finished processes are archived and appear in the list of finished workflows for
             participating users, i.e. for users for whom the RegisterPendingProcess action was called. -->
     <FinalAction class="ArchiveProcessFinalAction" maxProcessesPerUser="100"/>
