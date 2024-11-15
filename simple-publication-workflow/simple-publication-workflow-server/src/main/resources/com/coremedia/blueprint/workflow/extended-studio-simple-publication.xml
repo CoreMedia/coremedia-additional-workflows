@@ -73,6 +73,8 @@
       <Rights>
         <Grant group="administratoren" rights="read, accept, retry"/>
         <Grant group="composer-role" rights="read, accept, retry"/>
+        <!-- SALESDEMO: Additional groups for fine-grained control -->
+        <Grant group="wf--simple-publication--composer-role" rights="read, accept, retry"/>
       </Rights>
 
       <Assignment>
@@ -115,6 +117,8 @@
       <Rights>
         <Grant group="administratoren" rights="read, accept, delegate, skip"/>
         <Grant group="composer-role" rights="read, accept, delegate, skip"/>
+        <!-- SALESDEMO: Additional groups for fine-grained control -->
+        <Grant group="wf--simple-publication--composer-role" rights="read, accept, retry"/>
       </Rights>
 
       <Assignment>

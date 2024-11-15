@@ -86,6 +86,8 @@
       <Rights>
         <Grant group="administratoren" rights="read, accept, cancel, delegate, reject"/>
         <Grant group="approver-role" rights="read, accept, cancel, delegate, reject"/>
+        <!-- SALESDEMO: Additional groups for fine-grained control -->
+        <Grant group="wf--two-step-publication--approver-role" rights="read, accept, cancel, delegate, reject"/>
       </Rights>
 
       <Assignment>
@@ -121,6 +123,8 @@
       <Rights>
         <Grant group="administratoren" rights="read, accept, cancel, delegate, reject"/>
         <Grant group="approver-role" rights="read, accept, cancel, delegate, reject"/>
+        <!-- SALESDEMO: Additional groups for fine-grained control -->
+        <Grant group="wf--two-step-publication--approver-role" rights="read, accept, cancel, delegate, reject"/>
       </Rights>
 
       <Assignment>
@@ -166,6 +170,9 @@
         <Grant group="administratoren" rights="read, accept, skip"/>
         <Grant group="composer-role" rights="read, accept"/>
         <Grant group="approver-role" rights="read, skip"/>
+        <!-- SALESDEMO: Additional groups for fine-grained control -->
+        <Grant group="wf--two-step-publication--composer-role" rights="read, accept"/>
+        <Grant group="wf--two-step-publication--approver-role" rights="read, skip"/>
       </Rights>
 
       <Assignment>
