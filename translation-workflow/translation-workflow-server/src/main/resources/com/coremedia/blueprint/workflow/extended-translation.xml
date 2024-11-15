@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+          Extended version of CoreMedia Translation Workflow for Studio
+-->
+<Workflow>
+  <Process name="Translation"
+           description="Translation by Translation Service"
+           startTask="ValidateParameters">
+
+    <Rights>
+      <Grant group="translation-manager-role"
+             rights="create, read, write, start, suspend, resume, abort"/>
+      <Grant user="admin" rights="create, start, suspend, resume, abort"/>
+      <Grant variable="targetSiteManagerGroup"
+             rights="read, write"/>
+      <!-- SALESDEMO: Additional groups for fine-grained control -->
+      <Grant group="wf--translation--abort" rights="abort"/>
+      <Grant group="wf--translation--create" rights="create"/>
+      <Grant group="wf--translation--read" rights="read"/>
+      <Grant group="wf--translation--resume" rights="resume"/>
+      <Grant group="wf--translation--start" rights="start"/>
+      <Grant group="wf--translation--suspend" rights="suspend"/>
+      <Grant group="wf--translation--write" rights="write"/>
+    </Rights>
+
+    <Variable name="subject" type="String"/>
+    <Variable name="comment" type="String"/>
+    <Variable name="autoSelfAssigned" type="Boolean">
+      <Boolean value="false"/>
+    </Variable>
+
+    <Variable name="translationAction" type="String"/>
+    <Variable name="targetSiteId" type="String"/>
+    <AggregationVariable name="targetSiteManagerGroup" type="Group"/>
+    <Variable name="performer" type="User"/>
+
+    <!-- list of contents or versions to be translated -->
+    <AggregationVariable name="masterContentObjects" type="Resource"/>
+
+    <!-- list of derived contents -->
+    <AggregationVariable name="derivedContents" type="Resource"/>
+    <!-- list of derived contents that did not exist before the workflow was started -->
+    <AggregationVariable name="createdContents" type="Resource"/>
+    <!-- list of checked-in versions of the derived contents before the actual translation started -->
+    <AggregationVariable name="rollbackVersions" type="Resource"/>
+    <!-- list of contents that were changed both in the derived and in the master site at conflicting places -->
+    <AggregationVariable name="autoMergeConflicts" type="Resource"/>
+
+    <!-- map that groups each derived content by its locale-->
+    <Variable name="translationTreeData" type="Blob"/>
+    <!-- map that groups each masterVersion by its derived content-->
+    <Variable name="premularConfigData" type="Blob"/>
+
+    <!-- string that defines the strategy how to calculate derived content-->
+    <Variable name="placeholderPreparationStrategy" type="String"/>
+
+
+    <InitialAssignment>
+      <Writes variable="subject"/>
+      <Writes variable="comment"/>
+      <Writes variable="autoSelfAssigned"/>
+      <Writes variable="masterContentObjects"/>
+      <Writes variable="targetSiteId"/>
+      <Writes variable="placeholderPreparationStrategy"/>
+    </InitialAssignment>
+
+    <Assignment>
+      <Writes variable="subject"/>
+      <Writes variable="comment"/>
+      <Writes variable="autoSelfAssigned"/>
+      <Writes variable="masterContentObjects"/>
+      <Writes variable="derivedContents"/>
+      <Writes variable="createdContents"/>
+      <Writes variable="translationAction"/>
+      <Writes variable="targetSiteManagerGroup"/>
+      <Writes variable="targetSiteId"/>
+      <Writes variable="performer"/>
+      <Writes variable="placeholderPreparationStrategy"/>
+    </Assignment>
+
+    <AutomatedTask name="ValidateParameters" successor="GetDerivedContents">
+      <Action class="RegisterPendingProcess" userVariable="OWNER_"/>
+      <Action class="com.coremedia.translate.workflow.ValidateTranslationParametersAction"
+              masterContentObjectsVariable="masterContentObjects"
+              targetSiteIdVariable="targetSiteId"/>
+    </AutomatedTask>
+
+    <AutomatedTask name="GetDerivedContents" successor="CheckIfDerivedContentsEmpty">
+      <Action class="com.coremedia.translate.workflow.GetDerivedContentsAction"
+              masterContentObjectsVariable="masterContentObjects"
+              derivedContentsVariable="derivedContents"
+              createdContentsVariable="createdContents"
+              placeholderPreparationStrategyVariable="placeholderPreparationStrategy"
+              targetSiteIdVariable="targetSiteId"/>
+      <Action class="com.coremedia.translate.workflow.FilterDerivedContentsAction"
+              masterContentObjectsVariable="masterContentObjects"
+              derivedContentsVariable="derivedContents"
+              ignoreContentStateIgnoreUpdates="true"
+      />
+    </AutomatedTask>
+
+    <If name="CheckIfDerivedContentsEmpty">
+      <Condition>
+        <Equal>
+          <IsEmpty variable="derivedContents"/>
+          <Boolean value="true"/>
+        </Equal>
+      </Condition>
+      <Then successor="Finish"/>
+      <Else successor="GetTargetSiteManagerGroup"/>
+    </If>
+
+    <AutomatedTask name="GetTargetSiteManagerGroup" successor="CreateTranslationTreeData">
+      <Action class="com.coremedia.translate.workflow.GetSiteManagerGroupAction"
+              siteVariable="targetSiteId"
+              siteManagerGroupVariable="targetSiteManagerGroup"/>
+    </AutomatedTask>
+
+    <AutomatedTask name="CreateTranslationTreeData" successor="CheckIfSelfAssigned">
+      <Action class="com.coremedia.translate.workflow.CreateTranslationTreeDataAction"
+              masterContentObjectsVariable="masterContentObjects"
+              derivedContentsVariable="derivedContents"
+              translationTreeDataVariable="translationTreeData"
+              premularConfigDataVariable="premularConfigData"
+          />
+    </AutomatedTask>
+
+    <If name="CheckIfSelfAssigned">
+      <Condition>
+        <Get variable="autoSelfAssigned"/>
+      </Condition>
+      <Then successor="AssignSelf"/>
+      <Else successor="Translate"/>
+    </If>
+
+    <AutomatedTask name="AssignSelf"
+                   description="assignuser-task" successor="TranslateSelf">
+      <Action class="ForceUser" task="TranslateSelf" userVariable="OWNER_"/>
+    </AutomatedTask>
+
+    <UserTask name="Translate"
+              successor="Switch" reexecutable="true">
+      <!-- !!! On Change: Please also update "copy" TranslateSelf -->
+      <Rights>
+        <Grant variable="targetSiteManagerGroup"
+               rights="read, accept"/>
+      </Rights>
+
+      <EntryAction class="com.coremedia.translate.workflow.ExtractPerformerAction"
+                   performerVariable="performer"/>
+      <EntryAction class="com.coremedia.translate.workflow.GetCheckedInVersionsAction"
+                   contentsVariable="derivedContents"
+                   resultVariable="rollbackVersions"
+                   performerVariable="performer"/>
+      <EntryAction class="com.coremedia.translate.workflow.AutoMergeTranslationAction"
+                   derivedContentsVariable="derivedContents"
+                   masterContentObjectsVariable="masterContentObjects"
+                   resultVariable="autoMergeConflicts"
+                   performerVariable="performer"
+                   ignoreContentStateIgnoreUpdates="true"
+      />
+
+      <Assignment>
+        <Reads variable="subject"/>
+        <Reads variable="targetSiteId"/>
+        <Reads variable="masterContentObjects"/>
+        <Reads variable="autoMergeConflicts"/>
+        <Writes variable="comment"/>
+        <Writes variable="derivedContents"/>
+        <Writes variable="createdContents"/>
+        <Writes variable="translationAction"/>
+        <Writes variable="performer"/>
+      </Assignment>
+
+      <ExitAction class="RegisterPendingProcess"/>
+    </UserTask>
+
+    <UserTask name="TranslateSelf"
+              successor="Switch" reexecutable="true"
+              autoAccepted="true">
+      <!-- !!! On Change: Please also update "copy" Translate -->
+      <!-- Difference to Translate: auto-accepted. -->
+      <Rights>
+        <Grant variable="targetSiteManagerGroup"
+               rights="read, accept"/>
+      </Rights>
+
+      <EntryAction class="com.coremedia.translate.workflow.ExtractPerformerAction"
+                   performerVariable="performer"/>
+      <EntryAction class="com.coremedia.translate.workflow.GetCheckedInVersionsAction"
+                   contentsVariable="derivedContents"
+                   resultVariable="rollbackVersions"
+                   performerVariable="performer"/>
+      <EntryAction class="com.coremedia.translate.workflow.AutoMergeTranslationAction"
+                   derivedContentsVariable="derivedContents"
+                   masterContentObjectsVariable="masterContentObjects"
+                   resultVariable="autoMergeConflicts"
+                   performerVariable="performer"
+                   ignoreContentStateIgnoreUpdates="true"
+      />
+
+      <Assignment>
+        <Reads variable="subject"/>
+        <Reads variable="targetSiteId"/>
+        <Reads variable="masterContentObjects"/>
+        <Reads variable="autoMergeConflicts"/>
+        <Writes variable="comment"/>
+        <Writes variable="derivedContents"/>
+        <Writes variable="createdContents"/>
+        <Writes variable="translationAction"/>
+        <Writes variable="performer"/>
+      </Assignment>
+
+      <ExitAction class="RegisterPendingProcess"/>
+    </UserTask>
+
+    <Switch name="Switch" defaultSuccessor="Finish">
+      <Case successor="SendToTranslationService">
+        <Equal>
+          <Get variable="translationAction"/>
+          <String value="sendToTranslationService"/>
+        </Equal>
+      </Case>
+      <Case successor="Rollback">
+        <Equal>
+          <Get variable="translationAction"/>
+          <String value="rollbackTranslation"/>
+        </Equal>
+      </Case>
+      <Case successor="Complete">
+        <Equal>
+          <Get variable="translationAction"/>
+          <String value="finishTranslation"/>
+        </Equal>
+      </Case>
+    </Switch>
+
+    <AutomatedTask name="SendToTranslationService" successor="Review">
+      <Action class="com.coremedia.blueprint.translate.workflow.SendToTranslationServiceAction"
+              derivedContentsVariable="derivedContents"
+              masterContentObjectsVariable="masterContentObjects"/>
+    </AutomatedTask>
+
+    <AutomatedTask name="Rollback" successor="Finish">
+      <Action class="com.coremedia.translate.workflow.RollbackVersionsAction"
+              rollbackVersionsVariable="rollbackVersions"
+              performerVariable="performer"/>
+      <Action class="com.coremedia.translate.workflow.RollbackTranslationAction"
+              contentsVariable="createdContents"
+              skipCleanInTranslation="true"/>
+    </AutomatedTask>
+
+    <UserTask name="Review" successor="Complete">
+      <Rights>
+        <Grant variable="targetSiteManagerGroup"
+               rights="read, write, accept, complete, cancel"/>
+      </Rights>
+      <Assignment>
+        <Reads variable="subject"/>
+        <Reads variable="targetSiteId"/>
+        <Reads variable="masterContentObjects"/>
+        <Writes variable="comment"/>
+        <Writes variable="derivedContents"/>
+        <Writes variable="createdContents"/>
+        <Writes variable="translationAction"/>
+      </Assignment>
+
+      <ExitAction class="RegisterPendingProcess"/>
+    </UserTask>
+
+    <AutomatedTask name="Complete" successor="Finish">
+      <Action class="com.coremedia.translate.workflow.CompleteTranslationAction"
+              derivedContentsVariable="derivedContents"
+              masterContentObjectsVariable="masterContentObjects"
+              performerVariable="performer"
+              skipCleanInTranslation="true"/>
+    </AutomatedTask>
+
+    <AutomatedTask name="Finish" final="true"/>
+
+    <FinalAction class="com.coremedia.translate.workflow.CleanInTranslationFinalAction"
+                 derivedContentsVariable="derivedContents"
+                 masterContentObjectsVariable="masterContentObjects"/>
+
+    <!-- Finally, make sure finished processes are archived and appear in the list of finished workflows for
+         participating users, i.e., for users for whom the RegisterPendingProcess action was called. -->
+    <FinalAction class="ArchiveProcessFinalAction" maxProcessesPerUser="100"/>
+
+  </Process>
+</Workflow>

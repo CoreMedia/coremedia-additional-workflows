@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
+
+  <!--
+  groups for translation workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--translation--composer-role"
+         name="wf--translation--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--translation--approver-role"
+         name="wf--translation--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--translation--publisher-role"
+         name="wf--translation--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--translation--abort" name="wf--translation--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--translation--create" name="wf--translation--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--translation--read" name="wf--translation--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+      <groupref id="wf--translation--approver-role"/>
+      <groupref id="wf--translation--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--translation--resume" name="wf--translation--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--translation--start" name="wf--translation--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--translation--suspend" name="wf--translation--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--translation--write" name="wf--translation--write" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--translation--composer-role"/>
+    </members>
+  </group>
+
+</repository>
