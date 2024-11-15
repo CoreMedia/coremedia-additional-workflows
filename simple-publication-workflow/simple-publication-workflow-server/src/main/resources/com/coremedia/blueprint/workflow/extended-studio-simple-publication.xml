@@ -73,6 +73,7 @@
       <Rights>
         <Grant group="administratoren" rights="read, accept, retry"/>
         <Grant group="composer-role" rights="read, accept, retry"/>
+        <Grant group="wf--simple-publication--read" rights="read, accept, retry"/>
       </Rights>
 
       <Assignment>
