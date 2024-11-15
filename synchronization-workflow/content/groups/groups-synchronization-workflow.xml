@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<repository xmlns="http://www.coremedia.com/2005/contentserver/userrepository">
+
+  <!--
+  groups for synchronization workflow
+  -->
+
+  <!-- composer role -->
+  <group id="wf--synchronization--composer-role"
+         name="wf--synchronization--composer-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- approver role -->
+  <group id="wf--synchronization--approver-role"
+         name="wf--synchronization--approver-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <!-- publisher role -->
+  <group id="wf--synchronization--publisher-role"
+         name="wf--synchronization--publisher-role"
+         contentgroup="true" livegroup="false" administrative="false"/>
+
+  <group id="wf--synchronization--abort" name="wf--synchronization--abort" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--synchronization--create" name="wf--synchronization--create" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--synchronization--read" name="wf--synchronization--read" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+      <groupref id="wf--synchronization--approver-role"/>
+      <groupref id="wf--synchronization--publisher-role"/>
+    </members>
+  </group>
+
+  <group id="wf--synchronization--resume" name="wf--synchronization--resume" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--synchronization--start" name="wf--synchronization--start" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--synchronization--suspend" name="wf--synchronization--suspend" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+    </members>
+  </group>
+
+  <group id="wf--synchronization--write" name="wf--synchronization--write" contentgroup="true" livegroup="false" administrative="false">
+    <members>
+      <groupref id="wf--synchronization--composer-role"/>
+    </members>
+  </group>
+
+</repository>
