@@ -10,16 +10,9 @@
     <Rights>
       <Grant group="administratoren" rights="read, write, create, start, suspend, resume, abort"/>
       <Grant group="composer-role" rights="read, write, create, start, suspend, resume, abort"/>
+      <Grant group="institute-role" rights="read, write, create, start, suspend, resume, abort"/>
       <Grant group="approver-role" rights="read, write"/>
       <Grant group="publisher-role" rights="read"/>
-      <!-- SALESDEMO: Additional groups for fine-grained control -->
-      <Grant group="wf--two-step-publication--abort" rights="abort"/>
-      <Grant group="wf--two-step-publication--create" rights="create"/>
-      <Grant group="wf--two-step-publication--read" rights="read"/>
-      <Grant group="wf--two-step-publication--resume" rights="resume"/>
-      <Grant group="wf--two-step-publication--start" rights="start"/>
-      <Grant group="wf--two-step-publication--suspend" rights="suspend"/>
-      <Grant group="wf--two-step-publication--write" rights="write"/>
     </Rights>
 
     <Variable name="subject" type="String"/>
