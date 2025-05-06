@@ -18,7 +18,7 @@
     "@coremedia/studio-client.multi-site-models": "^2412.0.1",
     "@coremedia/studio-client.workflow-models": "^2412.0.1",
     "@coremedia/studio-client.workflow-plugin-models": "^2412.0.1",
-    "@jangaroo/ext-ts": "^2.0.0",
+    "@jangaroo/ext-ts": "^2.1.0",
     "@jangaroo/runtime": "^3.2.0"
   },
   "devDependencies": {
