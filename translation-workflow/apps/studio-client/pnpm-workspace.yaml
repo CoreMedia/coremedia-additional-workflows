@@ -1,0 +1,4 @@
+packages:
+  - "apps/main/translation-workflow"
+  - "apps/workflow/translation-workflow"
+  - "shared/ext/translation-workflow"

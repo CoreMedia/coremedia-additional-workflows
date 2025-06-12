@@ -1,0 +1,32 @@
+{
+  "name": "@coremedia-labs/studio-client.ext.translation-workflow-studio-client.workflow",
+  "author": "CoreMedia GmbH",
+  "version": "1.0.0-SNAPSHOT",
+  "license": "CoreMedia Open Source License",
+  "private": true,
+  "dependencies": {
+    "@coremedia-labs/studio-client.ext.translation-workflow-studio-client": "workspace:*"
+  },
+  "devDependencies": {
+    "@jangaroo/build": "^3.2.0",
+    "@jangaroo/core": "^3.2.0",
+    "@coremedia/eslint-config-studio-client-ext": "^2412.0.0",
+    "@jangaroo/publish": "^3.1.0",
+    "eslint": "^8.57.0",
+
+    "rimraf": "^5.0.7"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist && rimraf ./build",
+    "build": "jangaroo build",
+    "watch": "jangaroo watch",
+    "publish": "jangaroo publish dist",
+    "lint": "eslint --fix \"src/**/*.ts\""
+  },
+  "coremedia": {
+    "projectExtensionFor": "studio-client.workflow"
+  },
+  "exports": {
+    "./*": "./dist/src/*.js"
+  }
+}
