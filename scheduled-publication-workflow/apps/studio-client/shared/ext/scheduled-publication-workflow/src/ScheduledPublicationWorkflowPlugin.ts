@@ -1,13 +1,19 @@
 import ContentRepositoryImpl from "@coremedia/studio-client.cap-rest-client-impl/content/impl/ContentRepositoryImpl";
 import session from "@coremedia/studio-client.cap-rest-client/common/session";
 import Calendar from "@coremedia/studio-client.client-core/data/Calendar";
-import PublicationWorkflowConstants from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
-import { Binding, DateTimeField, TextField, WorkflowState } from "@coremedia/studio-client.workflow-plugin-models/CustomWorkflowApi";
+import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
+import {
+  Binding,
+  DateTimeField, PublicationWorkflowPlugin, RunningWorkflowFormExtension, StartWorkflowFormExtension,
+  TextField,
+  WorkflowState
+} from "@coremedia/studio-client.workflow-plugin-models/CustomWorkflowApi";
 import { workflowLocalizationRegistry } from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
 import { workflowPlugins } from "@coremedia/studio-client.workflow-plugin-models/WorkflowPluginRegistry";
 import DateUtil from "@jangaroo/ext-ts/Date";
 import { is } from "@jangaroo/runtime";
 import ScheduledPublicationProcessDefinitions_properties from "./ScheduledPublicationProcessDefinitions_properties";
+import { getLocalizer } from "@coremedia/studio-client.i18n-models";
 
 const SCHEDULE_TASK_NAME: string = "Schedule";
 
@@ -52,73 +58,80 @@ interface ScheduledPublicationViewModel {
   processRunning?: boolean;
 }
 
-workflowPlugins._.addPublicationWorkflowPlugin<ScheduledPublicationViewModel>({
-  workflowName: "StudioScheduledPublication",
+const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
+  const localizer = await getLocalizer(ScheduledPublicationProcessDefinitions_properties);
+  return {
+    workflowName: "StudioScheduledPublication",
 
-  transitions: [
-    {
-      task: SCHEDULE_TASK_NAME,
-      defaultNextTask: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
-      nextSteps: [
-        { name: PublicationWorkflowConstants.PUBLISH_TASK_NAME },
+    transitions: [
+      {
+        task: SCHEDULE_TASK_NAME,
+        defaultNextTask: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
+        nextSteps: [
+          { name: PublicationWorkflowConstants.PUBLISH_TASK_NAME },
+        ],
+      },
+    ],
+
+    startWorkflowFormExtension: StartWorkflowFormExtension<ScheduledPublicationViewModel>({
+      computeViewModel() {
+        const defaultDueDate = getCalendarOfTomorrow();
+        if (!defaultDueDate) {
+          return undefined;
+        }
+
+        return { scheduledDateTime: defaultDueDate };
+      },
+
+      saveViewModel(viewModel: ScheduledPublicationViewModel): Record<string, any> {
+        return { scheduledDate: viewModel.scheduledDateTime };
+      },
+
+      remotelyValidatedViewModelFields: ["scheduledDateTime"],
+
+      fields: [
+        DateTimeField({
+          label: localizer("WorkflowForm_workflowDate_label"),
+          value: Binding("scheduledDateTime"),
+        }),
       ],
-    },
-  ],
+    }),
 
-  startWorkflowFormExtension: {
-    computeViewModel() {
-      const defaultDueDate = getCalendarOfTomorrow();
-      if (!defaultDueDate) {
-        return undefined;
-      }
+    runningWorkflowFormExtension: RunningWorkflowFormExtension<ScheduledPublicationViewModel>({
 
-      return { scheduledDateTime: defaultDueDate };
-    },
+      computeViewModel(state: WorkflowState): ScheduledPublicationViewModel {
+        return {
+          scheduledDateString: dateToString(state.process.getProperties().get("scheduledDate")),
+          completionDateString: dateToString(state.process.getCompletionDate()),
+          processCompleted: state.process.isCompleted(),
+          processRunning: !state.process.isCompleted(),
+        };
+      },
 
-    saveViewModel(viewModel: ScheduledPublicationViewModel): Record<string, any> {
-      return { scheduledDate: viewModel.scheduledDateTime };
-    },
+      saveViewModel() {
+        return {};
+      },
 
-    remotelyValidatedViewModelFields: ["scheduledDateTime"],
+      fields: [
+        TextField({
+          label: localizer("WorkflowForm_workflowDate_label"),
+          readonly: true,
+          hidden: Binding("processCompleted"),
+          value: Binding("scheduledDateString"),
+        }),
+        TextField({
+          label: localizer("WorkflowForm_completionDate_label"),
+          readonly: true,
+          hidden: Binding("processRunning"),
+          value: Binding("completionDateString"),
+        }),
+      ],
+    }),
+  };
+};
 
-    fields: [
-      DateTimeField({
-        label: ScheduledPublicationProcessDefinitions_properties.WorkflowForm_workflowDate_label,
-        value: Binding("scheduledDateTime"),
-      }),
-    ],
-  },
-
-  runningWorkflowFormExtension: {
-
-    computeViewModel(state: WorkflowState): ScheduledPublicationViewModel {
-      return {
-        scheduledDateString: dateToString(state.process.getProperties().get("scheduledDate")),
-        completionDateString: dateToString(state.process.getCompletionDate()),
-        processCompleted: state.process.isCompleted(),
-        processRunning: !state.process.isCompleted(),
-      };
-    },
-
-    saveViewModel() {
-      return {};
-    },
-
-    fields: [
-      TextField({
-        label: ScheduledPublicationProcessDefinitions_properties.WorkflowForm_workflowDate_label,
-        readonly: true,
-        hidden: Binding("processCompleted"),
-        value: Binding("scheduledDateString"),
-      }),
-      TextField({
-        label: ScheduledPublicationProcessDefinitions_properties.WorkflowForm_completionDate_label,
-        readonly: true,
-        hidden: Binding("processRunning"),
-        value: Binding("completionDateString"),
-      }),
-    ],
-  },
+getWorkflowPlugin().then((workflowPlugin) => {
+  workflowPlugins._.addTranslationWorkflowPlugin(workflowPlugin);
 });
 
 workflowLocalizationRegistry._.addLocalization("StudioScheduledPublication", {

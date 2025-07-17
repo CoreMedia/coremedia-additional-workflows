@@ -1,53 +1,62 @@
-import PublicationWorkflowConstants from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
-import { workflowLocalizationRegistry } from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
+import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
+import {
+  workflowLocalizationRegistry
+} from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
 import { workflowPlugins } from "@coremedia/studio-client.workflow-plugin-models/WorkflowPluginRegistry";
 import ThreeStepPublicationProcessDefinitions_properties from "./ThreeStepPublicationProcessDefinitions_properties";
+import { PublicationWorkflowPlugin } from "@coremedia/studio-client.workflow-plugin-models";
 
-workflowPlugins._.addPublicationWorkflowPlugin<any>({
-  workflowName: "StudioThreeStepPublication",
+const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
+  return {
+    workflowName: "StudioThreeStepPublication",
 
-  nextStepVariable: PublicationWorkflowConstants.NEXT_SELECTED_TASK_PROCESS_VARIABLE_NAME,
+    nextStepVariable: PublicationWorkflowConstants.NEXT_SELECTED_TASK_PROCESS_VARIABLE_NAME,
 
-  transitions: [
-    {
-      task: PublicationWorkflowConstants.COMPOSE_TASK_NAME,
-      defaultNextTask: PublicationWorkflowConstants.APPROVE_TASK_NAME,
-      nextSteps: [
-        {
-          name: PublicationWorkflowConstants.APPROVE_TASK_NAME,
-          isAssignmentTask: true,
-        },
-      ],
-    },
-    {
-      task: PublicationWorkflowConstants.APPROVE_TASK_NAME,
-      defaultNextTask: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
-      nextSteps: [
-        {
-          name: PublicationWorkflowConstants.COMPOSE_TASK_NAME,
-          allowAlways: true,
-        },
-        {
-          name: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
-          isAssignmentTask: true,
-        },
-      ],
-    },
-    {
-      task: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
-      defaultNextTask: "DoPublish",
-      nextSteps: [
-        {
-          name: PublicationWorkflowConstants.APPROVE_TASK_NAME,
-          allowAlways: true,
-        },
-        {
-          name: "DoPublish",
-          forceCurrentPerformer: true,
-        },
-      ],
-    },
-  ],
+    transitions: [
+      {
+        task: PublicationWorkflowConstants.COMPOSE_TASK_NAME,
+        defaultNextTask: PublicationWorkflowConstants.APPROVE_TASK_NAME,
+        nextSteps: [
+          {
+            name: PublicationWorkflowConstants.APPROVE_TASK_NAME,
+            isAssignmentTask: true,
+          },
+        ],
+      },
+      {
+        task: PublicationWorkflowConstants.APPROVE_TASK_NAME,
+        defaultNextTask: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
+        nextSteps: [
+          {
+            name: PublicationWorkflowConstants.COMPOSE_TASK_NAME,
+            allowAlways: true,
+          },
+          {
+            name: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
+            isAssignmentTask: true,
+          },
+        ],
+      },
+      {
+        task: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
+        defaultNextTask: "DoPublish",
+        nextSteps: [
+          {
+            name: PublicationWorkflowConstants.APPROVE_TASK_NAME,
+            allowAlways: true,
+          },
+          {
+            name: "DoPublish",
+            forceCurrentPerformer: true,
+          },
+        ],
+      },
+    ],
+  };
+};
+
+getWorkflowPlugin().then((workflowPlugin) => {
+  workflowPlugins._.addPublicationWorkflowPlugin(workflowPlugin);
 });
 
 workflowLocalizationRegistry._.addLocalization("StudioThreeStepPublication", {
