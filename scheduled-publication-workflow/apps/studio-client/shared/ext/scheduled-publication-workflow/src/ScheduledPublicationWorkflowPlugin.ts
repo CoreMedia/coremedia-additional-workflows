@@ -131,7 +131,7 @@ const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
 };
 
 getWorkflowPlugin().then((workflowPlugin) => {
-  workflowPlugins._.addTranslationWorkflowPlugin(workflowPlugin);
+  workflowPlugins._.addPublicationWorkflowPlugin(workflowPlugin);
 });
 
 workflowLocalizationRegistry._.addLocalization("StudioScheduledPublication", {
