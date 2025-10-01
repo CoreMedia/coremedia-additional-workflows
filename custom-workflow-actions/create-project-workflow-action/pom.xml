@@ -51,6 +51,57 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>project-sql-aggregator</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+        <exclusion>
+          <groupId>org.hibernate.orm</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>notification-sql-data</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+        <exclusion>
+          <groupId>org.hibernate.orm</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>notification-sql-converter-workflow</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>notification-sql-converter-project</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>coremedia-hibernate</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+        <exclusion>
+          <groupId>org.hibernate.orm</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
 
     <!-- THIRD-PARTY dependencies -->
     <dependency>
@@ -80,6 +131,13 @@
       <dependency>
         <groupId>com.coremedia.cms</groupId>
         <artifactId>middle-core-bom</artifactId>
+        <version>${cm.middle.core.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.coremedia.cms</groupId>
+        <artifactId>middle-thirdparty-bom</artifactId>
         <version>${cm.middle.core.version}</version>
         <type>pom</type>
         <scope>import</scope>
