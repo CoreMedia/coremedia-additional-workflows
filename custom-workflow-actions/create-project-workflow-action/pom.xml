@@ -38,12 +38,13 @@
     <dependency>
       <groupId>com.coremedia.cms</groupId>
       <artifactId>project-elastic</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
-    <dependency>
+    <!--<dependency>
       <groupId>com.coremedia.cms</groupId>
       <artifactId>todo-elastic</artifactId>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>com.coremedia.cms</groupId>
@@ -107,6 +108,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
     </dependency>
 
     <dependency>
