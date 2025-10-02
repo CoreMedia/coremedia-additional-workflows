@@ -41,11 +41,6 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!--<dependency>
-      <groupId>com.coremedia.cms</groupId>
-      <artifactId>todo-elastic</artifactId>
-    </dependency>-->
-
     <dependency>
       <groupId>com.coremedia.cms</groupId>
       <artifactId>notification-elastic</artifactId>
