@@ -14,7 +14,7 @@
 
   <properties>
     <coremedia.project.extension.for>workflow-server</coremedia.project.extension.for>
-    <cm.middle.core.version>2406.0.2</cm.middle.core.version>
+    <cm.middle.core.version>2412.0.3</cm.middle.core.version>
   </properties>
 
   <dependencies>
@@ -38,11 +38,7 @@
     <dependency>
       <groupId>com.coremedia.cms</groupId>
       <artifactId>project-elastic</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.coremedia.cms</groupId>
-      <artifactId>todo-elastic</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -51,11 +47,67 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>project-sql-aggregator</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+        <exclusion>
+          <groupId>org.hibernate.orm</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>notification-sql-data</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+        <exclusion>
+          <groupId>org.hibernate.orm</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>notification-sql-converter-workflow</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>notification-sql-converter-project</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.coremedia.cms</groupId>
+      <artifactId>coremedia-hibernate</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+        <exclusion>
+          <groupId>org.hibernate.orm</groupId>
+          <artifactId>hibernate-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
 
     <!-- THIRD-PARTY dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
     </dependency>
 
     <dependency>
@@ -70,6 +122,13 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- temporary fix for version convergence issue - to be removed with next CM upgrade -->
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
 
     <!-- TEST dependencies -->
 
@@ -80,6 +139,13 @@
       <dependency>
         <groupId>com.coremedia.cms</groupId>
         <artifactId>middle-core-bom</artifactId>
+        <version>${cm.middle.core.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.coremedia.cms</groupId>
+        <artifactId>middle-thirdparty-bom</artifactId>
         <version>${cm.middle.core.version}</version>
         <type>pom</type>
         <scope>import</scope>

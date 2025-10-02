@@ -18,20 +18,11 @@ mvn extensions:sync -Denable=custom-workflow-actions
     <groupId>com.coremedia.blueprint</groupId>
     <artifactId>create-project-workflow-action</artifactId>
     <version>${project.version}</version>
+    <scope>runtime</scope>
 </dependency>
 ```
 
-3. Import the Spring configuration in your workflow configuration class.
-
-```java
-@Configuration
-@Import({CreateProjectActionConfiguration.class})
-public class MyWorkflowConfiguration {
-  ...
-}
-```
-
-4. Adapt your workflow definition by adding the action before the final step.
+3. Adapt your workflow definition by adding the action before the final step.
 
 ```xml
 ...
