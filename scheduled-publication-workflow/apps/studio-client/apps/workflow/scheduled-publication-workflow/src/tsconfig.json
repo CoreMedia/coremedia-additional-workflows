@@ -6,7 +6,7 @@
   },
   "references": [
     {
-      "path": "../../../../shared/ext/scheduled-publication-workflow/src"
+      "path": "../../../../shared/js/scheduled-publication-workflow/src"
     },
   ]
 }
