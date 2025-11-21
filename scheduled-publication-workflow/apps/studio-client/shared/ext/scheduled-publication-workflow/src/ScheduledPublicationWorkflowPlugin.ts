@@ -1,21 +1,33 @@
+import { session } from "@coremedia/studio-client.cap-rest-client";
+import { Calendar } from "@coremedia/studio-client.client-core";
 import ContentRepositoryImpl from "@coremedia/studio-client.cap-rest-client-impl/content/impl/ContentRepositoryImpl";
-import session from "@coremedia/studio-client.cap-rest-client/common/session";
-import Calendar from "@coremedia/studio-client.client-core/data/Calendar";
-import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
+import { getLocalizer } from "@coremedia/studio-client.i18n-models";
+import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models";
 import {
   Binding,
-  DateTimeField, PublicationWorkflowPlugin, RunningWorkflowFormExtension, StartWorkflowFormExtension,
+  DateTimeField,
+  PublicationWorkflowPlugin,
+  RunningWorkflowFormExtension,
+  StartWorkflowFormExtension,
   TextField,
-  WorkflowState
-} from "@coremedia/studio-client.workflow-plugin-models/CustomWorkflowApi";
-import { workflowLocalizationRegistry } from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
-import { workflowPlugins } from "@coremedia/studio-client.workflow-plugin-models/WorkflowPluginRegistry";
-import DateUtil from "@jangaroo/ext-ts/Date";
-import { is } from "@jangaroo/runtime";
+  WorkflowIssuesLocalization,
+  WorkflowLocalization,
+  workflowLocalizationRegistry,
+  workflowPlugins,
+  WorkflowState,
+} from "@coremedia/studio-client.workflow-plugin-models";
+import { is, joo } from "@jangaroo/runtime";
 import ScheduledPublicationProcessDefinitions_properties from "./ScheduledPublicationProcessDefinitions_properties";
-import { getLocalizer } from "@coremedia/studio-client.i18n-models";
 
 const SCHEDULE_TASK_NAME: string = "Schedule";
+
+const dateTimeFormat: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "numeric",
+  minute: "2-digit",
+};
 
 function getCalendarOfTomorrow(): Calendar {
   const dayDate: Date = new Date();
@@ -46,7 +58,8 @@ function dateToString(value): string {
   }
 
   if (date) {
-    return DateUtil.format(date, "m/d/Y g:i A");
+    const locale = joo.localeSupport.getLocale();
+    return new Intl.DateTimeFormat(locale, dateTimeFormat).format(date);
   }
 }
 
@@ -134,19 +147,37 @@ getWorkflowPlugin().then((workflowPlugin) => {
   workflowPlugins._.addPublicationWorkflowPlugin(workflowPlugin);
 });
 
-workflowLocalizationRegistry._.addLocalization("StudioScheduledPublication", {
-  displayName: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_displayName,
-  description: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_displayName,
-  tasks: {
-    Schedule: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Schedule_displayName,
-    Publish: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Publish_displayName,
-    Wait: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Wait_displayName,
-  },
-  states: {
-    Schedule: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Schedule_displayName,
-    Publish: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Publish_displayName,
-    Wait: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Wait_displayName,
-  },
+const getScheduledPublicationProcessLocalization = async (): Promise<WorkflowLocalization> => {
+  const localizer = await getLocalizer(ScheduledPublicationProcessDefinitions_properties);
+
+  return {
+    displayName: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_displayName,
+    description: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_displayName,
+    tasks: {
+      Schedule: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Schedule_displayName,
+      Publish: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Publish_displayName,
+      Wait: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Wait_displayName,
+    },
+    states: {
+      Schedule: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Schedule_displayName,
+      Publish: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Publish_displayName,
+      Wait: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Wait_displayName,
+    },
+  };
+};
+
+getScheduledPublicationProcessLocalization().then((scheduledPublicationProcessLocalization) => {
+  workflowLocalizationRegistry._.addLocalization("StudioScheduledPublication", scheduledPublicationProcessLocalization);
 });
 
-workflowLocalizationRegistry._.addIssuesLocalization({ dateLiesInPast_scheduledDate: ScheduledPublicationProcessDefinitions_properties.ErrorCode_dateLiesInPast_scheduledDate_text });
+const getScheduledPublicationIssuesLocalization = async (): Promise<WorkflowIssuesLocalization> => {
+  const localizer = await getLocalizer(ScheduledPublicationProcessDefinitions_properties);
+
+  return {
+    dateLiesInPast_scheduledDate: ScheduledPublicationProcessDefinitions_properties.ErrorCode_dateLiesInPast_scheduledDate_text,
+  };
+};
+
+getScheduledPublicationIssuesLocalization().then((scheduledPublicationIssuesLocalization) => {
+  workflowLocalizationRegistry._.addIssuesLocalization(scheduledPublicationIssuesLocalization);
+});
