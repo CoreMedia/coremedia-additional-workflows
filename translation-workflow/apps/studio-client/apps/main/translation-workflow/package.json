@@ -8,20 +8,18 @@
     "@coremedia-labs/studio-client.ext.translation-workflow-studio-client": "workspace:*"
   },
   "devDependencies": {
-    "@jangaroo/build": "^3.3.1",
-    "@jangaroo/core": "^3.3.1",
-    "@coremedia/eslint-config-studio-client-ext": "^2506.0.0",
-    "@jangaroo/publish": "^3.1.0",
-    "eslint": "^8.57.0",
+    "@jangaroo/build": "catalog:",
+    "@jangaroo/core": "catalog:",
+    "@coremedia/studio-client.ext.eslint-config": "catalog:",
+    "eslint": "catalog:",
 
-    "rimraf": "^5.0.7"
+    "rimraf": "catalog:"
   },
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./build",
     "build": "jangaroo build",
     "watch": "jangaroo watch",
-    "publish": "jangaroo publish",
-    "lint": "eslint --fix \"src/**/*.ts\""
+    "lint": "eslint"
   },
   "exports": {
     "./*": {
