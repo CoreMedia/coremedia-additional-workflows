@@ -17,12 +17,10 @@
     "@jangaroo/runtime": "catalog:"
   },
   "devDependencies": {
-    "@jangaroo/build": "catalog:",
-
-    "@jangaroo/core": "catalog:",
     "@coremedia/studio-client.ext.eslint-config": "catalog:",
+    "@jangaroo/build": "catalog:",
+    "@jangaroo/core": "catalog:",
     "eslint": "catalog:",
-
     "rimraf": "catalog:"
   },
   "scripts": {

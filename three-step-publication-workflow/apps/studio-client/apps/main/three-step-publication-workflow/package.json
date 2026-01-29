@@ -8,11 +8,10 @@
     "@coremedia-labs/studio-client.ext.three-step-publication-workflow-studio-client": "workspace:*"
   },
   "devDependencies": {
+    "@coremedia/studio-client.ext.eslint-config": "catalog:",
     "@jangaroo/build": "catalog:",
     "@jangaroo/core": "catalog:",
-    "@coremedia/studio-client.ext.eslint-config": "catalog:",
     "eslint": "catalog:",
-
     "rimraf": "catalog:"
   },
   "scripts": {
