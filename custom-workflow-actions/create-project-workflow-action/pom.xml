@@ -14,7 +14,7 @@
 
   <properties>
     <coremedia.project.extension.for>workflow-server</coremedia.project.extension.for>
-    <cm.middle.core.version>2506.0.2</cm.middle.core.version>
+    <cm.middle.core.version>2512.0.0</cm.middle.core.version>
   </properties>
 
   <dependencies>
@@ -57,6 +57,14 @@
           <groupId>org.hibernate.orm</groupId>
           <artifactId>hibernate-core</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.springframework.data</groupId>
+          <artifactId>spring-data-jpa</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.data</groupId>
+          <artifactId>spring-data-commons</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -69,6 +77,14 @@
         <exclusion>
           <groupId>org.hibernate.orm</groupId>
           <artifactId>hibernate-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.data</groupId>
+          <artifactId>spring-data-jpa</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.data</groupId>
+          <artifactId>spring-data-commons</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
