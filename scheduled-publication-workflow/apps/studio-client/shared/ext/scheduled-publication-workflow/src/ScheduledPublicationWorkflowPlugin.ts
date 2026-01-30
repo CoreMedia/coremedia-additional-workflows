@@ -1,4 +1,4 @@
-import ContentRepositoryImpl from "@coremedia/studio-client.cap-rest-client-impl/content/impl/ContentRepositoryImpl";
+import ContentRepositoryImpl from "@coremedia/studio-client.cap-rest-client/content/impl/ContentRepositoryImpl";
 import session from "@coremedia/studio-client.cap-rest-client/common/session";
 import Calendar from "@coremedia/studio-client.client-core/data/Calendar";
 import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
