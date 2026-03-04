@@ -1,7 +1,6 @@
-import ResourceBundleUtil from "@jangaroo/runtime/l10n/ResourceBundleUtil";
 import ScheduledPublicationProcessDefinitions_properties from "./ScheduledPublicationProcessDefinitions_properties";
 
-ResourceBundleUtil.override(ScheduledPublicationProcessDefinitions_properties, {
+Object.assign(ScheduledPublicationProcessDefinitions_properties, {
   StudioScheduledPublication_displayName: "Zeitbasierte Publikation",
   WorkflowForm_workflowDate_label: "Geplante Publikation",
   WorkflowForm_completionDate_label: "Fertig gestellt",
@@ -11,4 +10,4 @@ ResourceBundleUtil.override(ScheduledPublicationProcessDefinitions_properties, {
   StudioScheduledPublication_state_Publish_displayName: "Inhalte publiziert zum geplanten Zeitpunkt",
   StudioScheduledPublication_task_Wait_displayName: "Warten auf geplante Publikation",
   ErrorCode_dateLiesInPast_scheduledDate_text: "Das geplante Publikations-Datum darf nicht in der Vergangenheit liegen.",
-});
+} satisfies Partial<ScheduledPublicationProcessDefinitions_properties>);
