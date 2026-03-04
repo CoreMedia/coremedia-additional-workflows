@@ -1,11 +1,11 @@
 {
-  "name": "@coremedia-labs/studio-client.main.scheduled-publication",
+  "name": "@coremedia-labs/studio-client.main.scheduled-publication-workflow",
   "author": "CoreMedia GmbH",
   "version": "1.0.0-SNAPSHOT",
   "license": "CoreMedia Open Source License",
   "private": true,
   "dependencies": {
-    "@coremedia-labs/studio-client.shared.scheduled-publication": "workspace:*"
+    "@coremedia-labs/studio-client.shared.scheduled-publication-workflow": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",

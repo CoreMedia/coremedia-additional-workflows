@@ -1,4 +1,4 @@
-import { workflowLocalizationRegistry } from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
+import { workflowLocalizationRegistry } from "@coremedia/studio-client.workflow-plugin-models";
 import ExtendedTranslationWorkflowProcessDefinitions_properties
   from "./ExtendedTranslationWorkflowProcessDefinitions_properties";
 
