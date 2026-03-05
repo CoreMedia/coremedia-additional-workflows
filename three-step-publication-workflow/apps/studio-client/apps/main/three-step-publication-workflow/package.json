@@ -1,41 +1,52 @@
 {
-  "name": "@coremedia-labs/studio-client.ext.three-step-publication-workflow-studio-client.main",
+  "name": "@coremedia-labs/studio-client.main.three-step-publication-workflow",
   "author": "CoreMedia GmbH",
   "version": "1.0.0-SNAPSHOT",
   "license": "CoreMedia Open Source License",
   "private": true,
   "dependencies": {
-    "@coremedia-labs/studio-client.ext.three-step-publication-workflow-studio-client": "workspace:*"
+    "@coremedia-labs/studio-client.shared.three-step-publication-workflow": "workspace:*"
   },
   "devDependencies": {
-    "@coremedia/studio-client.ext.eslint-config": "catalog:",
-    "@jangaroo/build": "catalog:",
-    "@jangaroo/core": "catalog:",
+    "@babel/core": "catalog:",
+    "@coremedia/studio-client.eslint-config": "catalog:",
+    "@coremedia/studio-client.build-config": "catalog:",
+    "@coremedia/studio-client.main.shared-modules": "catalog:",
     "eslint": "catalog:",
-    "rimraf": "catalog:"
+    "rimraf": "catalog:",
+    "typescript": "catalog:",
+    "webpack": "catalog:",
+    "webpack-cli": "catalog:"
   },
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./build",
-    "build": "jangaroo build",
-    "watch": "jangaroo watch",
-    "lint": "eslint"
+    "clean": "rimraf ./dist",
+    "prebuild": "sync-tsconfig-project-references src --includeDevDependencies",
+    "build": "tsc --project src && webpack build --mode=production",
+    "watch": "webpack watch --mode=development",
+    "lint": "eslint \"src/**/*.ts*\""
   },
   "exports": {
-    "./*": {
-      "types": "./src/*.ts",
-      "default": "./dist/src/*.js"
+    "./appEntry.js": {
+      "default": "./dist/appEntry.js"
     }
   },
   "coremedia": {
-    "projectExtensionFor": "studio-client.main"
+    "projectExtensionFor": "studio-client.main",
+    "plugins": {
+      "main_threeStepPublicationWorkflowPlugin": "./dist/appEntry.js"
+    }
   },
   "publishConfig": {
     "directory": "dist",
     "linkDirectory": false,
     "exports": {
-      "./*": {
-        "types": "./src/*.d.ts",
-        "default": "./src/*.js"
+      "./appEntry.js": {
+        "default": "./appEntry.js"
+      }
+    },
+    "coremedia": {
+      "plugins": {
+        "main_threeStepPublicationWorkflowPlugin": "./appEntry.js"
       }
     }
   }

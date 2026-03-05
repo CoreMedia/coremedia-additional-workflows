@@ -1,54 +1,30 @@
-import ContentRepositoryImpl from "@coremedia/studio-client.cap-rest-client/content/impl/ContentRepositoryImpl";
-import session from "@coremedia/studio-client.cap-rest-client/common/session";
-import Calendar from "@coremedia/studio-client.client-core/data/Calendar";
-import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
+import { Calendar } from "@coremedia/studio-client.client-core";
+import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models";
 import {
   Binding,
-  DateTimeField, PublicationWorkflowPlugin, RunningWorkflowFormExtension, StartWorkflowFormExtension,
+  DateTimeField,
+  PublicationWorkflowPlugin,
+  RunningWorkflowFormExtension,
+  StartWorkflowFormExtension,
   TextField,
-  WorkflowState
-} from "@coremedia/studio-client.workflow-plugin-models/CustomWorkflowApi";
-import { workflowLocalizationRegistry } from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
-import { workflowPlugins } from "@coremedia/studio-client.workflow-plugin-models/WorkflowPluginRegistry";
-import DateUtil from "@jangaroo/ext-ts/Date";
-import { is } from "@jangaroo/runtime";
+  WorkflowIssuesLocalization,
+  WorkflowLocalizationConfig,
+  WorkflowState,
+  workflowLocalizationRegistry,
+  workflowPlugins,
+} from "@coremedia/studio-client.workflow-plugin-models";
 import ScheduledPublicationProcessDefinitions_properties from "./ScheduledPublicationProcessDefinitions_properties";
-import { getLocalizer } from "@coremedia/studio-client.i18n-models";
+import { getLocalizer, registerLocale } from "@coremedia/studio-client.i18n-models";
+import { scheduledPublication } from "@coremedia/studio-client.common-icons";
+import { dateToString, getCalendarOfTomorrow } from "./Utils";
 
+// Register localization bundles
+registerLocale(ScheduledPublicationProcessDefinitions_properties, "de", async () => {
+  await import("./ScheduledPublicationProcessDefinitions_de_properties");
+});
+
+const WORKFLOW_NAME: string = "StudioScheduledPublication";
 const SCHEDULE_TASK_NAME: string = "Schedule";
-
-function getCalendarOfTomorrow(): Calendar {
-  const dayDate: Date = new Date();
-  const dayDateInMilliseconds = dayDate.getTime();
-  const tomorrowInMillieSeconds = dayDateInMilliseconds + 86400000;
-  const tomorrowDate: Date = new Date(tomorrowInMillieSeconds);
-  return new Calendar({
-    year: tomorrowDate.getFullYear(),
-    month: tomorrowDate.getMonth(),
-    day: tomorrowDate.getDate(),
-    hour: tomorrowDate.getHours(),
-    minute: tomorrowDate.getMinutes(),
-    second: tomorrowDate.getSeconds(),
-    offset: 0,
-    timeZone: (session._.getConnection().getContentRepository() as ContentRepositoryImpl).getDefaultTimeZone(),
-    normalized: true,
-  });
-}
-
-function dateToString(value): string {
-  let date: Date;
-  if (is(value, Date)) {
-    date = value;
-  } else if (is(value, Calendar)) {
-    date = value.getDate();
-  } else {
-    return null;
-  }
-
-  if (date) {
-    return DateUtil.format(date, "m/d/Y g:i A");
-  }
-}
 
 interface ScheduledPublicationViewModel {
   scheduledDateString?: string;
@@ -61,16 +37,16 @@ interface ScheduledPublicationViewModel {
 const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
   const localizer = await getLocalizer(ScheduledPublicationProcessDefinitions_properties);
   return {
-    workflowName: "StudioScheduledPublication",
+    workflowName: WORKFLOW_NAME,
 
     transitions: [
       {
         task: SCHEDULE_TASK_NAME,
         defaultNextTask: PublicationWorkflowConstants.PUBLISH_TASK_NAME,
         nextSteps: [
-          { name: PublicationWorkflowConstants.PUBLISH_TASK_NAME },
-        ],
-      },
+          { name: PublicationWorkflowConstants.PUBLISH_TASK_NAME }
+        ]
+      }
     ],
 
     startWorkflowFormExtension: StartWorkflowFormExtension<ScheduledPublicationViewModel>({
@@ -92,9 +68,9 @@ const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
       fields: [
         DateTimeField({
           label: localizer("WorkflowForm_workflowDate_label"),
-          value: Binding("scheduledDateTime"),
-        }),
-      ],
+          value: Binding("scheduledDateTime")
+        })
+      ]
     }),
 
     runningWorkflowFormExtension: RunningWorkflowFormExtension<ScheduledPublicationViewModel>({
@@ -104,7 +80,7 @@ const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
           scheduledDateString: dateToString(state.process.getProperties().get("scheduledDate")),
           completionDateString: dateToString(state.process.getCompletionDate()),
           processCompleted: state.process.isCompleted(),
-          processRunning: !state.process.isCompleted(),
+          processRunning: !state.process.isCompleted()
         };
       },
 
@@ -117,16 +93,16 @@ const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
           label: localizer("WorkflowForm_workflowDate_label"),
           readonly: true,
           hidden: Binding("processCompleted"),
-          value: Binding("scheduledDateString"),
+          value: Binding("scheduledDateString")
         }),
         TextField({
           label: localizer("WorkflowForm_completionDate_label"),
           readonly: true,
           hidden: Binding("processRunning"),
-          value: Binding("completionDateString"),
-        }),
-      ],
-    }),
+          value: Binding("completionDateString")
+        })
+      ]
+    })
   };
 };
 
@@ -134,19 +110,36 @@ getWorkflowPlugin().then((workflowPlugin) => {
   workflowPlugins._.addPublicationWorkflowPlugin(workflowPlugin);
 });
 
-workflowLocalizationRegistry._.addLocalization("StudioScheduledPublication", {
-  displayName: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_displayName,
-  description: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_displayName,
-  tasks: {
-    Schedule: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Schedule_displayName,
-    Publish: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Publish_displayName,
-    Wait: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_task_Wait_displayName,
-  },
-  states: {
-    Schedule: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Schedule_displayName,
-    Publish: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Publish_displayName,
-    Wait: ScheduledPublicationProcessDefinitions_properties.StudioScheduledPublication_state_Wait_displayName,
-  },
+const getWorkflowLocalization = async (): Promise<WorkflowLocalizationConfig> => {
+  const localize = await getLocalizer(ScheduledPublicationProcessDefinitions_properties);
+  return {
+    displayName: localize("StudioScheduledPublication_displayName"),
+    description: localize("StudioScheduledPublication_displayName"),
+    svgIcon: scheduledPublication,
+    states: {
+      Schedule: localize("StudioScheduledPublication_state_Schedule_displayName"),
+      Publish: localize("StudioScheduledPublication_state_Publish_displayName"),
+      Wait: localize("StudioScheduledPublication_state_Wait_displayName")
+    },
+    tasks: {
+      Schedule: localize("StudioScheduledPublication_task_Schedule_displayName"),
+      Publish: localize("StudioScheduledPublication_task_Publish_displayName"),
+      Wait: localize("StudioScheduledPublication_task_Wait_displayName")
+    }
+  };
+};
+
+getWorkflowLocalization().then((workflowLocalization) => {
+  workflowLocalizationRegistry._.addLocalization(WORKFLOW_NAME, workflowLocalization);
 });
 
-workflowLocalizationRegistry._.addIssuesLocalization({ dateLiesInPast_scheduledDate: ScheduledPublicationProcessDefinitions_properties.ErrorCode_dateLiesInPast_scheduledDate_text });
+const getWorkflowIssuesLocalization = async (): Promise<WorkflowIssuesLocalization> => {
+  const localize = await getLocalizer(ScheduledPublicationProcessDefinitions_properties);
+  return {
+    dateLiesInPast_scheduledDate: localize("ErrorCode_dateLiesInPast_scheduledDate_text")
+  };
+};
+
+getWorkflowIssuesLocalization().then((issuesLocalization) => {
+  workflowLocalizationRegistry._.addIssuesLocalization(issuesLocalization);
+});

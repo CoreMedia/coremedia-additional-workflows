@@ -1,14 +1,24 @@
-import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models/PublicationWorkflowConstants";
-import {
-  workflowLocalizationRegistry
-} from "@coremedia/studio-client.workflow-plugin-models/WorkflowLocalizationRegistry";
-import { workflowPlugins } from "@coremedia/studio-client.workflow-plugin-models/WorkflowPluginRegistry";
 import ThreeStepPublicationProcessDefinitions_properties from "./ThreeStepPublicationProcessDefinitions_properties";
-import { PublicationWorkflowPlugin } from "@coremedia/studio-client.workflow-plugin-models";
+import { PublicationWorkflowConstants } from "@coremedia/studio-client.workflow-models";
+import {
+  PublicationWorkflowPlugin,
+  WorkflowLocalizationConfig,
+  workflowLocalizationRegistry,
+  workflowPlugins
+} from "@coremedia/studio-client.workflow-plugin-models";
+import { getLocalizer, registerLocale } from "@coremedia/studio-client.i18n-models";
+import { threeStepPublication} from "@coremedia/studio-client.common-icons";
+
+// Register localization bundles
+registerLocale(ThreeStepPublicationProcessDefinitions_properties, "de", async () => {
+  await import("./ThreeStepPublicationProcessDefinitions_de_properties");
+});
+
+const WORKFLOW_NAME: string = "StudioThreeStepPublication";
 
 const getWorkflowPlugin = async (): Promise<PublicationWorkflowPlugin> => {
   return {
-    workflowName: "StudioThreeStepPublication",
+    workflowName: WORKFLOW_NAME,
 
     nextStepVariable: PublicationWorkflowConstants.NEXT_SELECTED_TASK_PROCESS_VARIABLE_NAME,
 
@@ -59,31 +69,39 @@ getWorkflowPlugin().then((workflowPlugin) => {
   workflowPlugins._.addPublicationWorkflowPlugin(workflowPlugin);
 });
 
-workflowLocalizationRegistry._.addLocalization("StudioThreeStepPublication", {
-  displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_displayName,
-  description: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_displayName,
-  tasks: {
-    Compose: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_task_Compose_displayName,
-    Approve: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_task_Approve_displayName,
-    Publish: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_task_Publish_displayName,
-    DoPublish: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_task_DoPublish_displayName,
-  },
-  states: {
-    Compose: {
-      displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_Compose_displayName,
-      confirm: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_Compose_confirm,
+const getWorkflowLocalization = async (): Promise<WorkflowLocalizationConfig> => {
+  const localize = await getLocalizer(ThreeStepPublicationProcessDefinitions_properties);
+  return {
+    displayName: localize("StudioThreeStepPublication_displayName"),
+    description: localize("StudioThreeStepPublication_displayName"),
+    svgIcon: threeStepPublication,
+    states: {
+      Compose: {
+        displayName: localize("StudioThreeStepPublication_state_Compose_displayName"),
+        confirm: localize("StudioThreeStepPublication_state_Compose_confirm"),
+      },
+      Approve: {
+        displayName: localize("StudioThreeStepPublication_state_Approve_displayName"),
+        confirm: localize("StudioThreeStepPublication_state_Approve_confirm"),
+      },
+      Publish: {
+        displayName: localize("StudioThreeStepPublication_state_Publish_displayName"),
+        confirm: localize("StudioThreeStepPublication_state_DoPublish_confirm"),
+      },
+      DoPublish: {
+        displayName: localize("StudioThreeStepPublication_state_DoPublish_displayName"),
+        confirm: localize("StudioThreeStepPublication_state_DoPublish_confirm"),
+      },
     },
-    Approve: {
-      displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_Approve_displayName,
-      confirm: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_Approve_confirm,
-    },
-    Publish: {
-      displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_Publish_displayName,
-      confirm: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_DoPublish_confirm,
-    },
-    DoPublish: {
-      displayName: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_DoPublish_displayName,
-      confirm: ThreeStepPublicationProcessDefinitions_properties.StudioThreeStepPublication_state_DoPublish_confirm,
-    },
-  },
+    tasks: {
+      Compose: localize("StudioThreeStepPublication_task_Compose_displayName"),
+      Approve: localize("StudioThreeStepPublication_task_Approve_displayName"),
+      Publish: localize("StudioThreeStepPublication_task_Publish_displayName"),
+      DoPublish: localize("StudioThreeStepPublication_task_DoPublish_displayName"),
+    }
+  }
+};
+
+getWorkflowLocalization().then((workflowLocalization) => {
+  workflowLocalizationRegistry._.addLocalization(WORKFLOW_NAME, workflowLocalization);
 });

@@ -1,30 +1,53 @@
 {
-  "name": "@coremedia-labs/studio-client.ext.translation-workflow-studio-client.workflow",
+  "name": "@coremedia-labs/studio-client.workflow.extended-translation-workflow",
   "author": "CoreMedia GmbH",
   "version": "1.0.0-SNAPSHOT",
   "license": "CoreMedia Open Source License",
   "private": true,
   "dependencies": {
-    "@coremedia-labs/studio-client.ext.translation-workflow-studio-client": "workspace:*"
+    "@coremedia-labs/studio-client.shared.extended-translation-workflow": "workspace:*"
   },
   "devDependencies": {
-    "@coremedia/studio-client.ext.eslint-config": "catalog:",
-    "@jangaroo/build": "catalog:",
-    "@jangaroo/core": "catalog:",
+    "@babel/core": "catalog:",
+    "@coremedia/studio-client.eslint-config": "catalog:",
+    "@coremedia/studio-client.build-config": "catalog:",
+    "@coremedia/studio-client.workflow.shared-modules": "catalog:",
     "eslint": "catalog:",
-    "rimraf": "catalog:"
+    "rimraf": "catalog:",
+    "typescript": "catalog:",
+    "webpack": "catalog:",
+    "webpack-cli": "catalog:"
   },
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./build",
-    "build": "jangaroo build",
-    "watch": "jangaroo watch",
-    "publish": "jangaroo publish dist",
-    "lint": "eslint"
-  },
-  "coremedia": {
-    "projectExtensionFor": "studio-client.workflow"
+    "clean": "rimraf ./dist",
+    "prebuild": "sync-tsconfig-project-references src --includeDevDependencies",
+    "build": "tsc --project src && webpack build --mode=production",
+    "watch": "webpack watch --mode=development",
+    "lint": "eslint \"src/**/*.ts*\""
   },
   "exports": {
-    "./*": "./dist/src/*.js"
+    "./appEntry.js": {
+      "default": "./dist/appEntry.js"
+    }
+  },
+  "coremedia": {
+    "projectExtensionFor": "studio-client.workflow",
+    "plugins": {
+      "workflow_extendedTranslationWorkflowPlugin": "./dist/appEntry.js"
+    }
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": false,
+  "exports": {
+      "./appEntry.js": {
+        "default": "./appEntry.js"
+      }
+    },
+    "coremedia": {
+      "plugins": {
+        "workflow_extendedTranslationWorkflowPlugin": "./appEntry.js"
+      }
+    }
   }
 }
