@@ -20,7 +20,7 @@
     "build": "jangaroo build",
     "watch": "jangaroo watch",
     "publish": "jangaroo publish dist",
-    "lint": "eslint --fix \"src/**/*.ts\""
+    "lint": "eslint \"src/**/*.ts\""
   },
   "coremedia": {
     "projectExtensionFor": "studio-client.workflow"
