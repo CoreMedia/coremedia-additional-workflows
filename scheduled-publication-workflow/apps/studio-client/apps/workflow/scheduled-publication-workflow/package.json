@@ -19,13 +19,26 @@
     "clean": "rimraf ./dist && rimraf ./build",
     "build": "jangaroo build",
     "watch": "jangaroo watch",
-    "publish": "jangaroo publish dist",
+    "publish": "jangaroo publish",
     "lint": "eslint \"src/**/*.ts\""
   },
   "coremedia": {
     "projectExtensionFor": "studio-client.workflow"
   },
   "exports": {
-    "./*": "./dist/src/*.js"
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": false,
+    "exports": {
+      "./*": {
+        "types": "./src/*.d.ts",
+        "default": "./src/*.js"
+      }
+    }
   }
 }
