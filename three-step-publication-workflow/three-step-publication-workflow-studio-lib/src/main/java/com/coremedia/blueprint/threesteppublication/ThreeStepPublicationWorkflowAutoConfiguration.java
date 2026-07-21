@@ -23,7 +23,6 @@ import java.util.Map;
 
 import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.APPROVE_TASK_NAME;
 import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.COMPOSE_TASK_NAME;
-import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.PUBLICATION_VALIDATION_PREPARATION;
 import static com.coremedia.rest.cap.workflow.validation.configuration.PublicationWorkflowValidationConfiguration.PUBLISH_TASK_NAME;
 
 @AutoConfiguration
@@ -39,7 +38,7 @@ public class ThreeStepPublicationWorkflowAutoConfiguration {
   }
 
   @Bean
-  WorkflowValidatorsModel threeStepPublicationWorkflowValidator(@Qualifier(PUBLICATION_VALIDATION_PREPARATION) WorkflowValidationPreparation publicationValidationPreparation,
+  WorkflowValidatorsModel threeStepPublicationWorkflowValidator(WorkflowValidationPreparation publicationValidationPreparation,
                                                                 @Qualifier(THREE_STEP_PUBLICATION_WORKFLOW_VALIDATORS) List<WorkflowValidator> threeStepWorkflowValidators) {
     ValidationTask composeRunningTask = new ValidationTask(COMPOSE_TASK_NAME, TaskState.RUNNING);
     ValidationTask approveRunningTask = new ValidationTask(APPROVE_TASK_NAME, TaskState.RUNNING);
